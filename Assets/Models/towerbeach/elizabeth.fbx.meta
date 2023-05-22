@@ -3,7 +3,52 @@ guid: e56ec224cace3924fa9c52ed6be5d813
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material
+    second: {fileID: 2100000, guid: c186226a3697aa2499f85383880db4b6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: color.002
+    second: {fileID: 2100000, guid: 3e4a00a9a2652a84e868af85d3286217, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: color.004
+    second: {fileID: 2100000, guid: b5a9ceea64cb90a4192b636354b46d29, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: color.005
+    second: {fileID: 2100000, guid: 4721a4e4635a9e142bbf94f7d23d599c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: color.007
+    second: {fileID: 2100000, guid: 5c36a62a3a637224fa7afcaa812cff8a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: eyeball
+    second: {fileID: 2100000, guid: 7788e6f587a3c184a9d9e89415c8f41c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: eyeball_2
+    second: {fileID: 2100000, guid: 0e75d5fcc36f20f4798372e58485654e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: hair.002
+    second: {fileID: 2100000, guid: cef85faafa82354498c9054c49a2bcc5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: skin
+    second: {fileID: 2100000, guid: 3b829360ada2f3242a0590d8a1c6a5f7, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

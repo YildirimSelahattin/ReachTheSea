@@ -3,7 +3,42 @@ guid: f34767d86c0a8ec43b550e5f8dc522bb
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: color.002
+    second: {fileID: 2100000, guid: 3430099578e47924abd5349fd327c254, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: color.016
+    second: {fileID: 2100000, guid: f6885ed9563bd5a42b378243ef3ae08b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: color.017
+    second: {fileID: 2100000, guid: 4a92b068de8efff4baf9e7c53384a40c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: eyeball
+    second: {fileID: 2100000, guid: efdb588b74161fb458b558fbc1eacae9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: eyeball_2
+    second: {fileID: 2100000, guid: e2020d33faef42143bf333a720926683, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: hair.005
+    second: {fileID: 2100000, guid: e2ab0287d05c12145a66b10e2d09efcf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: skin.003
+    second: {fileID: 2100000, guid: aa64966d6887b1f42aa64aaf6260393e, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -10,6 +10,9 @@ public class DataList
     {
         public int gridHeight;
         public int gridWidth;
+        public List<int> roadIndexes;
+        public List<int> machineSpotIndexes;
+        public int howManyPeopleToGenerate;
     }
 
     public GeneralDataStructure[] levelsArray;

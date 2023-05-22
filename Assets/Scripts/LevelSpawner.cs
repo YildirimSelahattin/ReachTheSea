@@ -10,6 +10,7 @@ public class LevelSpawner : MonoBehaviour
 {
     // Start is called before the first frame update
     public List<GameObject> gridObjectsList = new List<GameObject>();
+    public List<GameObject> machineGridObjectList = new List<GameObject>();
     public List<int> gridList = new List<int>();
     public GameObject[] gridPrefabArray;
     public int gridWidth;
@@ -58,9 +59,31 @@ public class LevelSpawner : MonoBehaviour
                 tempGrid.name = x.ToString() + y.ToString();
                 tempGrid.transform.localPosition = new Vector3(x * xSize, 0, -y * ySize);
                 gridObjectsList.Add(tempGrid);
+                if (GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].roadIndexes.Contains(index))//road
+                {
+                    Instantiate(gridPrefabArray[1],tempGrid.transform);
+                }
+                else if (GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].machineSpotIndexes.Contains(index))//machinespot
+                {
+                    Instantiate(gridPrefabArray[2], tempGrid.transform);
+                    machineGridObjectList.Add(tempGrid);
+                }
+                else//land
+                {
+                    if (y > 15)
+                    {
+                        Instantiate(gridPrefabArray[3], tempGrid.transform);
+                    }
+                    else
+                    {
+                        Instantiate(gridPrefabArray[0], tempGrid.transform);
+                    }
+                }
                 index++;
-                Instantiate(gridPrefabArray[0], tempGrid.transform);
             }
         }
+
+        //Instantiate people spawner
+        PeopleGenerator.Instance.GeneratePeople();
     }
 }
