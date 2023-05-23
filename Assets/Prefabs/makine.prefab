@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6329581208070341519}
   - component: {fileID: 452136864141773678}
   - component: {fileID: 7015734144868154000}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: UmbrellaButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -257,7 +257,7 @@ GameObject:
   - component: {fileID: 6145009911433447625}
   - component: {fileID: 6087648613939053990}
   - component: {fileID: 5569270729133992045}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: sunGlassButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -356,7 +356,7 @@ GameObject:
   - component: {fileID: 5358679913901257265}
   - component: {fileID: 8489443879210739767}
   - component: {fileID: 1755913472223619011}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: sunScreenButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}

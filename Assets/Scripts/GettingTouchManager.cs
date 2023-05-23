@@ -11,6 +11,10 @@ public class GettingTouchManager : MonoBehaviour
     [SerializeField] LayerMask touchableMachineSpotLayer;
     [SerializeField] LayerMask floorTouchableLayer;
     [SerializeField] LayerMask buttonTouchableLayer;
+    [SerializeField] LayerMask Machine1Layer;
+    [SerializeField] LayerMask Machine2Layer;
+    [SerializeField] LayerMask Machine3Layer;
+
 
     public Vector3 touchStartPos;
     public GameObject turret;
@@ -55,9 +59,22 @@ public class GettingTouchManager : MonoBehaviour
                     }
 
                 }
-                if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity, buttonTouchableLayer)) // if it hit to a machine object
+                if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity, Machine1Layer)) // if it hit to a machine object
                 {
-                     Instantiate(turret,hit.collider.gameObject.transform.parent.parent);
+                     MachineGenerator.Instance.mach1Create(hit);
+                     Debug.Log("Mach1");
+                }
+                if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity, Machine2Layer)) // if it hit to a machine object
+                {
+                    MachineGenerator.Instance.mach2Create(hit);
+                    Debug.Log("Mach2");
+
+                }
+                if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity, Machine3Layer)) // if it hit to a machine object
+                {
+                    MachineGenerator.Instance.mach3Create(hit);
+                    Debug.Log("Mach3");
+
                 }
             }
             else if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
