@@ -10,8 +10,10 @@ public class GettingTouchManager : MonoBehaviour
     public GameObject touchedMachineSpot;
     [SerializeField] LayerMask touchableMachineSpotLayer;
     [SerializeField] LayerMask floorTouchableLayer;
+    [SerializeField] LayerMask buttonTouchableLayer;
 
     public Vector3 touchStartPos;
+    public GameObject turret;
     public Vector3 curTouchPosition;
     // Start is called before the first frame update
     void Start()
@@ -52,6 +54,10 @@ public class GettingTouchManager : MonoBehaviour
                         machineSpot.transform.GetChild(0).GetComponent<MachineSpotManager>().buttonLayout.SetActive(false);
                     }
 
+                }
+                if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity, buttonTouchableLayer)) // if it hit to a machine object
+                {
+                     Instantiate(turret,hit.collider.gameObject.transform.parent.parent);
                 }
             }
             else if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)

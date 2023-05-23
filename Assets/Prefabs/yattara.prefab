@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 6049767200881277304}
   m_Layer: 0
   m_Name: yattara
-  m_TagString: Untagged
+  m_TagString: People
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -175,6 +175,7 @@ MonoBehaviour:
   modelParent: {fileID: 344389385137626946}
   character: {fileID: 2732301103725078694}
   dangerousIcon: {fileID: 0}
+  peopleIndex: 0
 --- !u!65 &6236150909295774561
 BoxCollider:
   m_ObjectHideFlags: 0

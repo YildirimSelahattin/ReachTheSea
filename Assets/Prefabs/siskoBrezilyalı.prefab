@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2283622394164615855}
   m_Layer: 0
   m_Name: "siskoBrezilyal\u0131"
-  m_TagString: Untagged
+  m_TagString: People
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -54,6 +54,7 @@ MonoBehaviour:
   modelParent: {fileID: 1046514077838507731}
   character: {fileID: 7564611731005350532}
   dangerousIcon: {fileID: 0}
+  peopleIndex: 0
 --- !u!54 &1376275399943533948
 Rigidbody:
   m_ObjectHideFlags: 0

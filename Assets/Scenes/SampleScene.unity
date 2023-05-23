@@ -629,6 +629,7 @@ MonoBehaviour:
   - {fileID: 870177942021277143, guid: 167ca96c9b396b94cae987c6a2c1deca, type: 3}
   - {fileID: 8350545944748251870, guid: ead1407526f4af44d81b0628f01af8db, type: 3}
   - {fileID: 3653093176375367192, guid: 21769b3bed81d0c4583e2b5d20cf30d1, type: 3}
+  peopleObjectList: []
 --- !u!4 &1707985786
 Transform:
   m_ObjectHideFlags: 0
@@ -679,8 +680,12 @@ MonoBehaviour:
     m_Bits: 64
   floorTouchableLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
+  buttonTouchableLayer:
+    serializedVersion: 2
+    m_Bits: 128
   touchStartPos: {x: 0, y: 0, z: 0}
+  turret: {fileID: 6026180987004594459, guid: 56f276b4da6858a47bbae40d5d502ef1, type: 3}
   curTouchPosition: {x: 0, y: 0, z: 0}
 --- !u!4 &1994614511
 Transform:

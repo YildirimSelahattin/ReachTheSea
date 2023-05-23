@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1064491911583130488}
   m_Layer: 0
   m_Name: delikanli
-  m_TagString: Untagged
+  m_TagString: People
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -67,6 +67,7 @@ MonoBehaviour:
   modelParent: {fileID: 5360327982914439923}
   character: {fileID: 2635188723976802387}
   dangerousIcon: {fileID: 0}
+  peopleIndex: 0
 --- !u!54 &1064491911583130488
 Rigidbody:
   m_ObjectHideFlags: 0

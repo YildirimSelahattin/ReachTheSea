@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6431096126170688291}
   m_Layer: 0
   m_Name: ponpon
-  m_TagString: Untagged
+  m_TagString: People
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -67,6 +67,7 @@ MonoBehaviour:
   modelParent: {fileID: 7627870425333830958}
   character: {fileID: 5995504879489458930}
   dangerousIcon: {fileID: 0}
+  peopleIndex: 0
 --- !u!54 &6431096126170688291
 Rigidbody:
   m_ObjectHideFlags: 0

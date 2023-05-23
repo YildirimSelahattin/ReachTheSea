@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 4155270555838063606}
   m_Layer: 0
   m_Name: kilicdaroglu
-  m_TagString: Untagged
+  m_TagString: People
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -115,6 +115,7 @@ MonoBehaviour:
   modelParent: {fileID: 5360619454645593585}
   character: {fileID: 8780059176209752117}
   dangerousIcon: {fileID: 0}
+  peopleIndex: 0
 --- !u!1 &8780059176209752117
 GameObject:
   m_ObjectHideFlags: 0
