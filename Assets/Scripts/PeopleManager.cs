@@ -26,7 +26,7 @@ public class PeopleManager : MonoBehaviour
         originalSkinColor = character.GetComponent<MeshRenderer>().materials[0].color;
         MoveToNextIndex(0);
         MoveShake();
-        
+
     }
 
     // Update is called once per frame
@@ -36,22 +36,24 @@ public class PeopleManager : MonoBehaviour
     }
     public void MoveToNextIndex(int index)
     {
-        Debug.Log("qwe");
-        if (index == positionIndexList.Count)
+        Debug.Log(index+"as");
+        if (index == positionIndexList.Count-1)
         {
-            gameObject.SetActive(false);
+            Debug.Log("qwe"+ positionIndexList[index] + 15);
+            transform.parent = LevelSpawner.Instance.gridObjectsList[positionIndexList[index]+30].transform;
+            transform.DOLocalJump(new Vector3(0,0,0),3,1,1f).OnComplete(()=>gameObject.SetActive(false));
             return;
         }
-       
+
         transform.parent = LevelSpawner.Instance.gridObjectsList[positionIndexList[index]].transform;
-        if (maxhealth!=curHealth && curHealth>0)
+        if (maxhealth != curHealth && curHealth > 0)
         {
             Debug.Log("sa");
             float redRatio = (maxhealth - curHealth) / maxhealth;
             Debug.Log(213 * redRatio);
             Debug.Log(208 * redRatio);
             character.transform.GetComponent<MeshRenderer>().materials[0].DOKill();
-            character.transform.GetComponent<MeshRenderer>().materials[0].DOColor(new Color32((byte)(240), (byte)(213-213*redRatio), (byte)(208-208*redRatio), 1), speed ).SetSpeedBased();
+            character.transform.GetComponent<MeshRenderer>().materials[0].DOColor(new Color32((byte)(240), (byte)(213 - 213 * redRatio), (byte)(208 - 208 * redRatio), 1), speed).SetSpeedBased();
         }
         transform.DOLocalMove(new Vector3(0, 0, 0), speed).SetSpeedBased().SetEase(Ease.Linear).OnComplete(() =>
         {
@@ -118,9 +120,19 @@ public class PeopleManager : MonoBehaviour
 
     public void MoveShake()
     {
-        modelParent.transform.DOLocalRotate(new Vector3(0, 0, -5.5f), speed *3*(maxhealth-curHealth)).SetSpeedBased().OnComplete(() =>
+        modelParent.transform.DOLocalRotate(new Vector3(0, 0, -5.5f), speed * 3 * (maxhealth - curHealth)).SetSpeedBased().OnComplete(() =>
         {
-            modelParent.transform.DOLocalRotate(new Vector3(0, 0, 5.5f), speed *3* (maxhealth - curHealth)).SetSpeedBased().OnComplete(() => MoveShake());
+            modelParent.transform.DOLocalRotate(new Vector3(0, 0, 5.5f), speed * 3 * (maxhealth - curHealth)).SetSpeedBased().OnComplete(() => MoveShake());
         });
+    }
+    public void CoolOf()
+    {
+        if (curHealth < maxhealth)
+        {
+            curHealth++;
+            float redRatio = (maxhealth - curHealth) / maxhealth;
+            character.transform.GetComponent<MeshRenderer>().materials[0].DOKill();
+            character.transform.GetComponent<MeshRenderer>().materials[0].DOColor(new Color32((byte)(240), (byte)(213 - 213 * redRatio), (byte)(208 - 208 * redRatio), 1), speed).SetSpeedBased();
+        }
     }
 }
