@@ -56,7 +56,7 @@ public class LevelSpawner : MonoBehaviour
             for (int x = 0; x < tempDataList.gridWidth; x++)
             {
                 GameObject tempGrid = Instantiate(grid, gridParent.transform);
-                tempGrid.name = x.ToString() + y.ToString();
+                tempGrid.name = (x+y*gridWidth).ToString();
                 tempGrid.transform.localPosition = new Vector3(x * xSize, 0, -y * ySize);
                 gridObjectsList.Add(tempGrid);
                 if (GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].roadIndexes.Contains(index))//road

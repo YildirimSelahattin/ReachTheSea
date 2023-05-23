@@ -29,7 +29,7 @@ public class PeopleGenerator : MonoBehaviour
 
     public IEnumerator Generate(int numberSoFar)
     {
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(6);
         if(numberSoFar != GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].howManyPeopleToGenerate)
         {
             GameObject temp=Instantiate(peoplePrefabList[Random.Range(0,peoplePrefabList.Count)], LevelSpawner.Instance.gridObjectsList[GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].roadIndexes[0]].transform);
