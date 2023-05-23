@@ -18,6 +18,7 @@ public class PeopleManager : MonoBehaviour
     public GameObject modelParent;
     public GameObject character;
     public GameObject dangerousIcon;
+    public int peopleIndex;
     void Start()
     {
         positionIndexList = GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].roadIndexes;
@@ -57,7 +58,7 @@ public class PeopleManager : MonoBehaviour
             curHealth--;
             if (curHealth == 0)
             {
-                gameObject.SetActive(false);
+                AmbulanceGenerator.Instance.CreateAmbulance(peopleIndex);
                 return;
             }
             if (curHealth == 1)
@@ -117,9 +118,9 @@ public class PeopleManager : MonoBehaviour
 
     public void MoveShake()
     {
-        modelParent.transform.DOLocalRotate(new Vector3(0, 0, -5.5f), speed *15).SetSpeedBased().OnComplete(() =>
+        modelParent.transform.DOLocalRotate(new Vector3(0, 0, -5.5f), speed *3*(maxhealth-curHealth)).SetSpeedBased().OnComplete(() =>
         {
-            modelParent.transform.DOLocalRotate(new Vector3(0, 0, 5.5f), speed *15).SetSpeedBased().OnComplete(() => MoveShake());
+            modelParent.transform.DOLocalRotate(new Vector3(0, 0, 5.5f), speed *3* (maxhealth - curHealth)).SetSpeedBased().OnComplete(() => MoveShake());
         });
     }
 }

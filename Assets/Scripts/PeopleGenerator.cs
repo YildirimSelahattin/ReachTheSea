@@ -7,6 +7,7 @@ public class PeopleGenerator : MonoBehaviour
     // Start is called before the first frame update
     public List<GameObject> peoplePrefabList;
     public static PeopleGenerator Instance;
+    public List<GameObject> peopleObjectList;
     void Awake()
     {
         if(Instance == null)
@@ -33,6 +34,8 @@ public class PeopleGenerator : MonoBehaviour
         {
             GameObject temp=Instantiate(peoplePrefabList[Random.Range(0,peoplePrefabList.Count)], LevelSpawner.Instance.gridObjectsList[GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].roadIndexes[0]].transform);
             temp.name = "People";
+            temp.GetComponent<PeopleManager>().peopleIndex = numberSoFar;
+            peopleObjectList.Add(temp);
             StartCoroutine(Generate(numberSoFar+1));
         }
     }
