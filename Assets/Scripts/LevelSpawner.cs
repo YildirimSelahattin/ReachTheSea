@@ -56,33 +56,23 @@ public class LevelSpawner : MonoBehaviour
             for (int x = 0; x < tempDataList.gridWidth; x++)
             {
                 GameObject tempGrid = Instantiate(grid, gridParent.transform);
-                tempGrid.name = (x+y*gridWidth).ToString();
+                tempGrid.AddComponent<NodeManager>();
+                tempGrid.GetComponent<NodeManager>().gridIndex = index;
+                tempGrid.name = index.ToString();
                 tempGrid.transform.localPosition = new Vector3(x * xSize, 0, -y * ySize);
+                if (y > 5)
+                {
+                    //Instantiate(gridPrefabArray[3], tempGrid.transform);
+                }
+                else
+                {
+                    //Instantiate(gridPrefabArray[0], tempGrid.transform);
+                }
                 gridObjectsList.Add(tempGrid);
-                if (GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].roadIndexes.Contains(index))//road
-                {
-                    Instantiate(gridPrefabArray[1],tempGrid.transform);
-                }
-                else if (GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].machineSpotIndexes.Contains(index))//machinespot
-                {
-                    Instantiate(gridPrefabArray[2], tempGrid.transform);
-                    machineGridObjectList.Add(tempGrid);
-                }
-                else//land
-                {
-                    if (y > 15)
-                    {
-                        Instantiate(gridPrefabArray[3], tempGrid.transform);
-                    }
-                    else
-                    {
-                        Instantiate(gridPrefabArray[0], tempGrid.transform);
-                    }
-                }
                 index++;
             }
         }
-
+     
         //Instantiate people spawner
         PeopleGenerator.Instance.GeneratePeople();
     }

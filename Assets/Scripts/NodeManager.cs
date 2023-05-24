@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MachineSpotManager : MonoBehaviour
+public class NodeManager : MonoBehaviour
 {
     // Start is called before the first frame update
-    public GameObject buttonLayout;
-    public GameObject machinePlaceObject;
+    public int gridIndex;
     void Start()
     {
         

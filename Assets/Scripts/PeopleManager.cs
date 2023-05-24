@@ -9,6 +9,7 @@ public class PeopleManager : MonoBehaviour
     public float speed;
     public float maxhealth;
     public float curHealth;
+    public float healthDecreaseAmount;
     public List<int> positionIndexList;
     Vector3 leftDirection = new Vector3(0, -90, 0);
     Vector3 rightDirection = new Vector3(0, 90, 0);
@@ -19,6 +20,7 @@ public class PeopleManager : MonoBehaviour
     public GameObject character;
     public GameObject dangerousIcon;
     public int peopleIndex;
+    public bool isUnderUmbrella;
     void Start()
     {
         positionIndexList = GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].roadIndexes;
@@ -39,8 +41,7 @@ public class PeopleManager : MonoBehaviour
         Debug.Log(index+"as");
         if (index == positionIndexList.Count-1)
         {
-            Debug.Log("qwe"+ positionIndexList[index] + 15);
-            transform.parent = LevelSpawner.Instance.gridObjectsList[positionIndexList[index]+30].transform;
+            transform.parent = LevelSpawner.Instance.gridObjectsList[positionIndexList[index]].transform;
             transform.DOLocalJump(new Vector3(0,0,0),3,1,1f).OnComplete(()=>gameObject.SetActive(false));
             return;
         }
@@ -57,9 +58,14 @@ public class PeopleManager : MonoBehaviour
         }
         transform.DOLocalMove(new Vector3(0, 0, 0), speed).SetSpeedBased().SetEase(Ease.Linear).OnComplete(() =>
         {
-            curHealth--;
+            if(isUnderUmbrella == false)
+            {
+                curHealth -= healthDecreaseAmount;
+            }
             if (curHealth == 0)
             {
+                transform.DOLocalMoveX(1, 0.5f);
+                transform.DOLocalRotate(new Vector3(0,0,90),0.5f);
                 AmbulanceGenerator.Instance.CreateAmbulance(peopleIndex);
                 return;
             }

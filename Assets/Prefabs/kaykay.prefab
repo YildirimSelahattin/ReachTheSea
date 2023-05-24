@@ -153,8 +153,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02099f2538d7b4141a01b02200892c68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.5
-  maxhealth: 10
+  speed: 5
+  maxhealth: 4
   curHealth: 0
   positionIndexList: 
   modelParent: {fileID: 5910566710340596933}

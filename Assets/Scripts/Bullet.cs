@@ -37,8 +37,7 @@ public class Bullet : MonoBehaviour
     {
         if (other.CompareTag("People"))// it hitted to people 
         {
-            //GameObject effectIns = Instantiate(impactEffect, transform.position, transform.rotation);
-            //Destroy(effectIns, 5f);
+            GameObject effectIns = Instantiate(impactEffect, transform.position, transform.rotation);
             other.gameObject.GetComponent<PeopleManager>().CoolOf();
             Destroy(gameObject);
         }

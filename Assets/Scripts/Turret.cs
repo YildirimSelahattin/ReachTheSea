@@ -19,27 +19,27 @@ public class Turret : MonoBehaviour
     public string enemyTag = "Enemy";
     public Transform partToRotate;
     public float turnSpeed = 10f;
-
+    public GameObject previewObject;
     public GameObject bulletPreFab;
     public Transform firePoint;
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("UpdateTarget", 0f, 2);
+        InvokeRepeating("UpdateTarget", 0f, 0.2f);
+        previewObject.transform.localScale = new Vector3(range*3, previewObject.transform.localScale.y, range*3) ;
     }
 
     void UpdateTarget()
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
         float shortestDistance = Mathf.Infinity;
         GameObject nearestEnemy = null;
-        foreach (GameObject enemy in enemies)
+        foreach (GameObject people in PeopleGenerator.Instance.peopleObjectList)
         {
-            float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+            float distanceToEnemy = Vector3.Distance(transform.position, people.transform.position);
             if (distanceToEnemy < shortestDistance)
             {
                 shortestDistance = distanceToEnemy;
-                nearestEnemy = enemy;
+                nearestEnemy = people;
             }
         }
 
