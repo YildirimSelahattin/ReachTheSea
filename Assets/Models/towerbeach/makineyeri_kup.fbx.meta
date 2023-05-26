@@ -3,7 +3,17 @@ guid: 69902663b0df25f41b6e114dd9c3727e
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: koyu
+    second: {fileID: 2100000, guid: b088fe99eacc524458b63308fefb8dc5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: makine yeri
+    second: {fileID: 2100000, guid: f884a295b4e7ad84c81e0cbe3c587447, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

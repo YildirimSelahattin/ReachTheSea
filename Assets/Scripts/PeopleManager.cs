@@ -6,11 +6,12 @@ using UnityEngine;
 public class PeopleManager : MonoBehaviour
 {
     // Start is called before the first frame update
-    public float speed;
+    float speed = 0.01f;
     public float maxhealth;
     public float curHealth;
     public float healthDecreaseAmount;
     public List<int> positionIndexList;
+    public float offsetRange = 0.004f;
     Vector3 leftDirection = new Vector3(0, -90, 0);
     Vector3 rightDirection = new Vector3(0, 90, 0);
     Vector3 upDirection = new Vector3(0, 180, 0);
@@ -23,11 +24,9 @@ public class PeopleManager : MonoBehaviour
     public bool isUnderUmbrella;
     void Start()
     {
-        positionIndexList = GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].roadIndexes;
         curHealth = maxhealth;
         originalSkinColor = character.GetComponent<MeshRenderer>().materials[0].color;
-        MoveToNextIndex(0);
-        MoveShake();
+        
 
     }
 
@@ -36,17 +35,27 @@ public class PeopleManager : MonoBehaviour
     {
 
     }
+    public void MoveStart()
+    {
+        ChangeRotation(0);
+        transform.parent = LevelSpawner.Instance.currentLevelScript.roadObjectList[0].transform;
+        transform.DOLocalMove(Vector3.zero, 1f).OnComplete(() =>
+        {
+            MoveToNextIndex(1);
+        });
+        MoveShake();
+    }
     public void MoveToNextIndex(int index)
     {
         Debug.Log(index+"as");
         if (index == positionIndexList.Count-1)
         {
-            transform.parent = LevelSpawner.Instance.gridObjectsList[positionIndexList[index]].transform;
-            transform.DOLocalJump(new Vector3(0,0,0),3,1,1f).OnComplete(()=>gameObject.SetActive(false));
+            transform.parent = LevelSpawner.Instance.currentLevelScript.seaJumpingPos.transform;
+            transform.DOLocalJump(new Vector3(Random.Range(-offsetRange,offsetRange),0,0),3,1,1f).OnComplete(()=>gameObject.SetActive(false));
+
             return;
         }
-
-        transform.parent = LevelSpawner.Instance.gridObjectsList[positionIndexList[index]].transform;
+        transform.parent = LevelSpawner.Instance.currentLevelScript.roadObjectList[index].transform;
         if (maxhealth != curHealth && curHealth > 0)
         {
             Debug.Log("sa");
@@ -56,7 +65,7 @@ public class PeopleManager : MonoBehaviour
             character.transform.GetComponent<MeshRenderer>().materials[0].DOKill();
             character.transform.GetComponent<MeshRenderer>().materials[0].DOColor(new Color32((byte)(240), (byte)(213 - 213 * redRatio), (byte)(208 - 208 * redRatio), 1), speed).SetSpeedBased();
         }
-        transform.DOLocalMove(new Vector3(0, 0, 0), speed).SetSpeedBased().SetEase(Ease.Linear).OnComplete(() =>
+        transform.DOLocalMove(new Vector3(Random.Range(-offsetRange, offsetRange), 0, 0), speed).SetSpeedBased().SetEase(Ease.Linear).OnComplete(() =>
         {
             if(isUnderUmbrella == false)
             {
@@ -82,53 +91,16 @@ public class PeopleManager : MonoBehaviour
 
     }
 
-    public void MoveShake(float speed)
-    {
-
-    }
     public void ChangeRotation(int index)
     {
-        if (positionIndexList[index] + 1 == positionIndexList[index + 1])
-        {
-            //goign right
-            if (transform.localRotation.eulerAngles != rightDirection)
-            {
-                //not turned right already
-                transform.DOLocalRotate(rightDirection, 0.2f);
-            }
-        }
-        else if (positionIndexList[index] - 1 == positionIndexList[index + 1])
-        {
-
-            //turn left
-            if (transform.localRotation.eulerAngles != leftDirection)
-            {
-                //not turned left already
-                transform.DOLocalRotate(leftDirection, 0.2f);
-            }
-        }
-        else if (positionIndexList[index] - GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].gridWidth == positionIndexList[index + 1])
-        {
-            //turn up
-            if (transform.localRotation.eulerAngles != upDirection)
-            {
-                transform.DOLocalRotate(upDirection, 0.2f);
-            }
-        }
-        else if (positionIndexList[index] + GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].gridWidth == positionIndexList[index + 1])
-        {
-            if (transform.localRotation.eulerAngles != downDirection)
-            {
-                transform.DOLocalRotate(downDirection, 0.2f);
-            }
-        }
+        transform.DOLookAt(LevelSpawner.Instance.currentLevelScript.roadObjectList[index+1].transform.position,0.2f);
     }
 
     public void MoveShake()
     {
-        modelParent.transform.DOLocalRotate(new Vector3(0, 0, -5.5f), speed * 3 * (maxhealth - curHealth)).SetSpeedBased().OnComplete(() =>
+        modelParent.transform.DOLocalRotate(new Vector3(0, 0, -5.5f), curHealth/maxhealth).OnComplete(() =>
         {
-            modelParent.transform.DOLocalRotate(new Vector3(0, 0, 5.5f), speed * 3 * (maxhealth - curHealth)).SetSpeedBased().OnComplete(() => MoveShake());
+            modelParent.transform.DOLocalRotate(new Vector3(0, 0, 5.5f),curHealth / maxhealth).OnComplete(() => MoveShake());
         });
     }
     public void CoolOf()

@@ -26,9 +26,9 @@ public class MachineGenerator : MonoBehaviour
 
     }
 
-    public void CreateSunscreenMachine(RaycastHit hit)
+    public void CreateSunscreenMachine(Transform parent)
     {
-        Instantiate(machines[0], hit.collider.gameObject.transform.parent.parent);
+        Instantiate(machines[0], parent);
     }
     public void CreateUmbrellaMachine(RaycastHit hit)
     {

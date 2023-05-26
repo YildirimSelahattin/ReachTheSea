@@ -13,12 +13,19 @@ public class Bullet : MonoBehaviour
     public void Seek(Transform _target)
     {
         target = _target;
+        ShootTarget();
     }
 
     public void ShootTarget()
     {
+        transform.parent = target.transform;
+        transform.DOLocalMove(new Vector3(0,3,0), speed).OnComplete(() =>
+        {
+            GameObject effectIns = Instantiate(impactEffect, transform.position, transform.rotation);
+            target.gameObject.GetComponent<PeopleManager>().CoolOf();
+            Destroy(gameObject);
+        });
 
-        transform.DOMove(target.position, speed).SetSpeedBased(true);
     }
     // Update is called once per frame
 
@@ -29,17 +36,15 @@ public class Bullet : MonoBehaviour
         {
             Destroy(gameObject);
             return;
+           
         }
-        ShootTarget();
+        
 
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("People"))// it hitted to people 
         {
-            GameObject effectIns = Instantiate(impactEffect, transform.position, transform.rotation);
-            other.gameObject.GetComponent<PeopleManager>().CoolOf();
-            Destroy(gameObject);
         }
     }
  

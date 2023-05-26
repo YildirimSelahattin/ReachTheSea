@@ -1,6 +1,9 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
+using Unity.Burst.CompilerServices;
+using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 
 public class GettingTouchManager : MonoBehaviour
@@ -10,11 +13,7 @@ public class GettingTouchManager : MonoBehaviour
     public GameObject touchedMachineSpot;
     [SerializeField] LayerMask touchableMachineSpotLayer;
     [SerializeField] LayerMask floorTouchableLayer;
-    [SerializeField] LayerMask buttonTouchableLayer;
-    [SerializeField] LayerMask Machine1Layer;
-    [SerializeField] LayerMask Machine2Layer;
-    [SerializeField] LayerMask Machine3Layer;
-
+    [SerializeField] LayerMask machinebuyingButtonsLayer;
 
     public Vector3 touchStartPos;
     public GameObject turret;
@@ -35,74 +34,38 @@ public class GettingTouchManager : MonoBehaviour
 
             if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)// This is actions when finger/cursor hit screen
             {
-                if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity, Machine1Layer)) // if it hit to a machine object
+                if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity, machinebuyingButtonsLayer)) // if it hit to a machine button
                 {
-                    MachineGenerator.Instance.CreateSunscreenMachine(hit);
-                    hit.collider.gameObject.transform.parent.gameObject.SetActive(false);
-                    foreach (GameObject machineSpot in LevelSpawner.Instance.machineGridObjectList)
+                    GameObject pressedButtonObject = hit.collider.gameObject;
+                    switch (pressedButtonObject.transform.tag)
                     {
-                        machineSpot.GetComponent<MachineSpotManager>().buttonLayout.SetActive(false);
+                        case "sunScreenPreviewButton":
+                            touchedMachineSpot.GetComponent<MachineSpotManager>().SunscreenPreviewButtonPressed();
+                            break;
+                        case "sunScreenBuyButton":
+                            touchedMachineSpot.GetComponent<MachineSpotManager>().SunscreenBuyButtonPressed();
+                            break;
                     }
                 }
-                else if(Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity, Machine2Layer)) // if it hit to a machine object
-                {
-                    MachineGenerator.Instance.CreateUmbrellaMachine(hit);
-                    hit.collider.gameObject.transform.parent.gameObject.SetActive(false);
-                    int currentIndex = hit.collider.gameObject.transform.parent.parent.parent.GetComponent<NodeManager>().gridIndex;
-                    Debug.Log(currentIndex);
-                    /*if (GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].machineSpotIndexes.Contains(currentIndex - 1))
-                    {
-                        LevelSpawner.Instance.gridObjectsList[currentIndex-1].transform.GetChild(0).GetComponent<MachineSpotManager>().machinePlaceObject.SetActive(false);
-                    }
-                    if (GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].machineSpotIndexes.Contains(currentIndex + 1))
-                    {
-                        LevelSpawner.Instance.gridObjectsList[currentIndex + 1].transform.GetChild(0).GetComponent<MachineSpotManager>().machinePlaceObject.SetActive(false);
-                    }
-                    if (GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].machineSpotIndexes.Contains(currentIndex + 15))
-                    {
-                        LevelSpawner.Instance.gridObjectsList[currentIndex + 15].transform.GetChild(0).GetComponent<MachineSpotManager>().machinePlaceObject.SetActive(false);
-                    }
-                    if (GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].machineSpotIndexes.Contains(currentIndex - 15))
-                    {
-                        LevelSpawner.Instance.gridObjectsList[currentIndex - 15].transform.GetChild(0).GetComponent<MachineSpotManager>().machinePlaceObject.SetActive(false);
-                    }*/
-                    foreach (GameObject machineSpot in LevelSpawner.Instance.machineGridObjectList)
-                    {
-                        machineSpot.GetComponent<MachineSpotManager>().buttonLayout.SetActive(false);
-                    }
-                }
-                else if(Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity, Machine3Layer)) // if it hit to a machine object
-                {
-                    MachineGenerator.Instance.mach3Create(hit);
-                    hit.collider.gameObject.transform.parent.gameObject.SetActive(false);
-                    foreach (GameObject machineSpot in LevelSpawner.Instance.machineGridObjectList)
-                    {
-                        machineSpot.GetComponent<MachineSpotManager>().buttonLayout.SetActive(false);
-                    }
-                }
-
                 else if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity, touchableMachineSpotLayer)) // if it hit to a machine object
                 {
-                    touchedMachineSpot = hit.collider.gameObject;
-                    Debug.Log(touchedMachineSpot.name);
-                    if (touchedMachineSpot.GetComponent<MachineSpotManager>().buttonLayout.active != true)
+                    if(touchedMachineSpot == hit.collider.gameObject)
                     {
-                        touchedMachineSpot.GetComponent<MachineSpotManager>().buttonLayout.SetActive(true);
+                        touchedMachineSpot.GetComponent<MachineSpotManager>().ResetAndClose();
+                        touchedMachineSpot = null;
                     }
+                    
                     else
                     {
-                        touchedMachineSpot.GetComponent<MachineSpotManager>().buttonLayout.SetActive(false);
+                        touchedMachineSpot = hit.collider.gameObject;
+                        touchedMachineSpot.GetComponent<MachineSpotManager>().buttonLayout.SetActive(true);
                     }
+
                 }
                 else if(Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity, floorTouchableLayer)) // if it hit to a machine object
                 {
-                    touchedMachineSpot = hit.collider.gameObject;
-                    Debug.Log(touchedMachineSpot.name);
-
-                    foreach (GameObject machineSpot in LevelSpawner.Instance.machineGridObjectList)
-                    {
-                        machineSpot.GetComponent<MachineSpotManager>().buttonLayout.SetActive(false);
-                    }
+                    touchedMachineSpot.GetComponent<MachineSpotManager>().ResetAndClose();
+                    touchedMachineSpot = null;
                 }
                 
             }
@@ -116,4 +79,12 @@ public class GettingTouchManager : MonoBehaviour
             }
         }
     }
+    public void CloseOtherLayouts()
+    {
+        foreach (GameObject machineSpot in LevelSpawner.Instance.currentLevelScript.machineObjectList)
+        {
+            machineSpot.GetComponent<MachineSpotManager>().buttonLayout.SetActive(false);
+        }
+    }
+
 }

@@ -8,6 +8,9 @@ using UnityEngine;
 public class Turret : MonoBehaviour
 {
     private Transform target;
+    public GameObject sunscreenGuy;
+    public GameObject tube;
+
 
     [Header("Attributes")]
     public float fireRate = 1f;
@@ -26,7 +29,6 @@ public class Turret : MonoBehaviour
     void Start()
     {
         InvokeRepeating("UpdateTarget", 0f, 0.2f);
-        previewObject.transform.localScale = new Vector3(range*3, previewObject.transform.localScale.y, range*3) ;
     }
 
     void UpdateTarget()
@@ -77,13 +79,28 @@ public class Turret : MonoBehaviour
 
     void Shoot()
     {
-        GameObject bulletGO = Instantiate(bulletPreFab, firePoint.position, firePoint.rotation);
-        Bullet bullet = bulletGO.GetComponent<Bullet>();
-
-        if (bullet != null)
+        float originalYPos = sunscreenGuy.transform.localPosition.y;
+        sunscreenGuy.transform.DOLocalMoveY(originalYPos + 2, 0.5f).OnComplete(() =>
         {
-            bullet.Seek(target);
-        }
+            sunscreenGuy.transform.DOLocalMoveY(originalYPos, 0.5f).SetEase(Ease.Linear).OnComplete(() =>
+            {
+                float originalZScale = tube.transform.localScale.z;
+                tube.transform.DOScaleZ(originalZScale * 0.8f, 0.2f).OnComplete(() =>
+                {
+                    tube.transform.DOScaleZ(originalZScale, 0.2f);
+                });
+
+                GameObject bulletGO = Instantiate(bulletPreFab, firePoint.position, firePoint.rotation);
+                Bullet bullet = bulletGO.GetComponent<Bullet>();
+
+                if (bullet != null)
+                {
+                    bullet.Seek(target);
+                }
+                
+            });
+        });
+        
     }
     void OnDrawGizmosSelected()
     {

@@ -9,16 +9,12 @@ using static DataList;
 public class LevelSpawner : MonoBehaviour
 {
     // Start is called before the first frame update
-    public List<GameObject> gridObjectsList = new List<GameObject>();
-    public List<GameObject> machineGridObjectList = new List<GameObject>();
-    public List<int> gridList = new List<int>();
-    public GameObject[] gridPrefabArray;
-    public int gridWidth;
     public float xSize;
     public float ySize;
-    public int gridHeight;
-    public GameObject gridParent;
+    public GameObject levelParent;
     public static LevelSpawner Instance;
+    public List<GameObject> levelPrefabs;
+    public LevelManager currentLevelScript;
 
     void Start()
     {
@@ -37,43 +33,14 @@ public class LevelSpawner : MonoBehaviour
 
     public void StartGame(int levelArrayIndex)
     {
-        gridHeight = GameDataManager.Instance.data.levelsArray[levelArrayIndex].gridHeight;
-        gridWidth = GameDataManager.Instance.data.levelsArray[levelArrayIndex].gridWidth;
         CreateGrid(levelArrayIndex);
-        if (gridHeight == 10)
-        {
-            gridParent.transform.DOLocalMove(new Vector3(-2.8f, 0, 8.77f), 0.5f);
-        }
+
     }
     public void CreateGrid(int levelIndex)
     {
-        GeneralDataStructure tempDataList = GameDataManager.Instance.data.levelsArray[levelIndex];
-        int index = 0;
-        GameObject grid = new GameObject();
-        // for elevator grid
-        for (int y = 0; y < tempDataList.gridHeight; y++)
-        {
-            for (int x = 0; x < tempDataList.gridWidth; x++)
-            {
-                GameObject tempGrid = Instantiate(grid, gridParent.transform);
-                tempGrid.AddComponent<NodeManager>();
-                tempGrid.GetComponent<NodeManager>().gridIndex = index;
-                tempGrid.name = index.ToString();
-                tempGrid.transform.localPosition = new Vector3(x * xSize, 0, -y * ySize);
-                if (y > 5)
-                {
-                    //Instantiate(gridPrefabArray[3], tempGrid.transform);
-                }
-                else
-                {
-                    //Instantiate(gridPrefabArray[0], tempGrid.transform);
-                }
-                gridObjectsList.Add(tempGrid);
-                index++;
-            }
-        }
-     
-        //Instantiate people spawner
+       
+        GameObject levelObject = Instantiate(levelPrefabs[levelIndex],levelParent.transform);
+        currentLevelScript = levelObject.GetComponent<LevelManager>();
         PeopleGenerator.Instance.GeneratePeople();
     }
 }

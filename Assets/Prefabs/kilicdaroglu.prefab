@@ -108,14 +108,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02099f2538d7b4141a01b02200892c68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
   maxhealth: 10
   curHealth: 0
+  healthDecreaseAmount: 0
   positionIndexList: 
+  offsetRange: 0.004
   modelParent: {fileID: 5360619454645593585}
   character: {fileID: 8780059176209752117}
   dangerousIcon: {fileID: 0}
   peopleIndex: 0
+  isUnderUmbrella: 0
 --- !u!1 &8780059176209752117
 GameObject:
   m_ObjectHideFlags: 0

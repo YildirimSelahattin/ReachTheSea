@@ -47,14 +47,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02099f2538d7b4141a01b02200892c68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
   maxhealth: 10
   curHealth: 0
+  healthDecreaseAmount: 0
   positionIndexList: 
+  offsetRange: 0.004
   modelParent: {fileID: 1046514077838507731}
   character: {fileID: 7564611731005350532}
   dangerousIcon: {fileID: 0}
   peopleIndex: 0
+  isUnderUmbrella: 0
 --- !u!54 &1376275399943533948
 Rigidbody:
   m_ObjectHideFlags: 0

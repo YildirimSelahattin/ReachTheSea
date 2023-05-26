@@ -7,6 +7,8 @@ TagManager:
   - Snap
   - MachineSpotGrid
   - People
+  - sunScreenPreviewButton
+  - sunScreenBuyButton
   layers:
   - Default
   - TransparentFX
@@ -15,11 +17,11 @@ TagManager:
   - Water
   - UI
   - machineSpot
-  - ShopButton
-  - Machine1
-  - Machine2
-  - Machine3
-  - kum
+  - machineButtons
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 
