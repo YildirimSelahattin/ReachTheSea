@@ -245,6 +245,8 @@ MonoBehaviour:
   bulletPreFab: {fileID: 3163121775401582380, guid: d94f6abfa5f6d4549afe046e69d99aff,
     type: 3}
   firePoint: {fileID: 6998068308939927896}
+  price: 0
+  upgradePrice: 0
 --- !u!65 &7048897015982818208
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -412,7 +414,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7279394997257036577}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.305, y: -0.0019755363, z: 1.78}
+  m_LocalPosition: {x: 0.305, y: 0.44, z: 1.78}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -466,17 +468,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 51a1c83daf087bb4185625f4ea52f1f1,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 52
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 51a1c83daf087bb4185625f4ea52f1f1,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 52
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 51a1c83daf087bb4185625f4ea52f1f1,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 52
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 51a1c83daf087bb4185625f4ea52f1f1,
         type: 3}

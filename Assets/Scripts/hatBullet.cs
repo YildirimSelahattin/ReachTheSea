@@ -13,18 +13,19 @@ public class hatBullet : MonoBehaviour
     public void Seek(Transform _target,int hatEffectPower)
     {
         target = _target;
-        target.gameObject.GetComponent<PeopleManager>().umbrellaObject = gameObject;
         ShootTarget(hatEffectPower);
     }
 
     public void ShootTarget( int hatEffectPower)
     {
-        transform.parent = target.transform.GetChild(0);
+        transform.parent = target.transform.GetChild(0).GetChild(0);
         transform.DOScale(new Vector3(88,88,88),0.5f);
         transform.DOLocalRotate(new Vector3(-90,0,0),0.5f);
         transform.DOLocalMove(new Vector3(0, 1, 0), speed).OnComplete(() =>
         {
-            GameObject effectIns = Instantiate(impactEffect, transform.position, transform.rotation);
+            //GameObject effectIns = Instantiate(impactEffect, transform.position, transform.rotation);
+            target.gameObject.GetComponent<PeopleManager>().umbrellaObject.Add(gameObject);
+            Debug.Log("name"+target.name);
             target.gameObject.GetComponent<PeopleManager>().isUnderUmbrella = hatEffectPower;
         });
 
@@ -54,5 +55,14 @@ public class hatBullet : MonoBehaviour
     {
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireSphere(transform.position, explosionRadius);
+    }
+
+    public void FallOf()
+    {
+        transform.DOLocalJump(new Vector3(1,0,0),1,2,0.5f);
+        transform.DOLocalRotate(new Vector3(0, 40, 50), 0.5f).OnComplete(() =>
+        {
+            gameObject.SetActive(false);
+        });
     }
 }

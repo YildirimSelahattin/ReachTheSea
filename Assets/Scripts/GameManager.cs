@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
 
     private int _currentMoney = 50;
+    public int currentReachedPeople = 0;
     public int currentMoney
     {
         get {

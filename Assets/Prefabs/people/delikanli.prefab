@@ -62,7 +62,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02099f2538d7b4141a01b02200892c68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxhealth: 20
+  maxhealth: 10
   curHealth: 0
   healthDecreaseAmount: 1
   positionIndexList: 
@@ -73,9 +73,10 @@ MonoBehaviour:
   dangerousIcon: {fileID: 0}
   peopleIndex: 0
   isUnderUmbrella: 0
-  umbrellaObject: {fileID: 0}
+  umbrellaObject: []
   reachMoney: 10
   healEffect: {fileID: 3121730132179921356}
+  skinMat: {fileID: 0}
 --- !u!54 &1064491911583130488
 Rigidbody:
   m_ObjectHideFlags: 0

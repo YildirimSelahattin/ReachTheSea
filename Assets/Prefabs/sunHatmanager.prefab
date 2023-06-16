@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 6166773631735610242}
   m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0.72, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.65, y: 0.65, z: 0.65}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1637925132317844470}
@@ -72,6 +72,8 @@ MonoBehaviour:
   bulletPreFab: {fileID: 3421113200608975084, guid: 3877b418f4e92cb40a748e91d8f324a2,
     type: 3}
   firePoint: {fileID: 8238153692264445143}
+  price: 0
+  upgradePrice: 0
   isInShootAnimation: 0
   tweeningKeyVariables:
   - 0

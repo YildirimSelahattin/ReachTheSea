@@ -35,7 +35,7 @@ public class PeopleGenerator : MonoBehaviour
         yield return new WaitForSeconds(6);
         if(numberSoFar != GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].howManyPeopleToGenerate)
         {
-            GameObject temp=Instantiate(peoplePrefabList[Random.Range(0,peoplePrefabList.Count)], LevelSpawner.Instance.currentLevelScript.spawnerPos.transform);
+            GameObject temp=Instantiate(peoplePrefabList[0], LevelSpawner.Instance.currentLevelScript.spawnerPos.transform);
             temp.name = "People";
             temp.GetComponent<PeopleManager>().peopleIndex = numberSoFar;
             temp.GetComponent<PeopleManager>().MoveStart();

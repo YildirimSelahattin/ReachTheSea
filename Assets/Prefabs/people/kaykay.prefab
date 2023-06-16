@@ -156,7 +156,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxhealth: 4
   curHealth: 0
-  healthDecreaseAmount: 0
+  healthDecreaseAmount: 1
   positionIndexList: 
   offsetRange: 0.004
   rotatingPart: {fileID: 5711894056484426700}
@@ -165,9 +165,10 @@ MonoBehaviour:
   dangerousIcon: {fileID: 0}
   peopleIndex: 0
   isUnderUmbrella: 0
-  umbrellaObject: {fileID: 0}
+  umbrellaObject: []
   reachMoney: 10
   healEffect: {fileID: 9059834089796206039}
+  skinMat: {fileID: 0}
 --- !u!65 &2262670784060495073
 BoxCollider:
   m_ObjectHideFlags: 0

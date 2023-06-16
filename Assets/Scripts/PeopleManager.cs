@@ -22,10 +22,11 @@ public class PeopleManager : MonoBehaviour
     public GameObject character;
     public GameObject dangerousIcon;
     public int peopleIndex;
-    public int isUnderUmbrella;
-    public GameObject umbrellaObject;
+    public int isUnderUmbrella = 0;
+    public List<GameObject> umbrellaObject;
     public float reachMoney = 10;
     public GameObject healEffect;
+    public Material skinMat;
     void Start()
     {
         curHealth = maxhealth;
@@ -60,6 +61,8 @@ public class PeopleManager : MonoBehaviour
                 gameObject.SetActive(false);
                 GameManager.Instance.currentMoney += 50;
                 GameDataManager.Instance.totalMoney += (int)reachMoney;
+                GameManager.Instance.currentReachedPeople++;
+                UIManager.Instance.currentPeopleText.text = GameManager.Instance.currentReachedPeople.ToString();
                 UIManager.Instance.moneyParticle.SetActive(true);
             });
             return;
@@ -69,18 +72,22 @@ public class PeopleManager : MonoBehaviour
         {
             float redRatio = (maxhealth - curHealth) / maxhealth;
             character.transform.GetComponent<MeshRenderer>().materials[0].DOKill();
-            character.transform.GetComponent<MeshRenderer>().materials[0].DOColor(new Color32((byte)(240), (byte)(213 - 213 * redRatio), (byte)(208 - 208 * redRatio), 1), speed).SetSpeedBased();
+            character.transform.GetComponent<MeshRenderer>().materials[0].DOColor(new Color32((byte)(240), (byte)(213 - 213 * redRatio), (byte)(208 - 208 * redRatio), 1), 0.1f);
         }
         transform.DOLocalMove(new Vector3(Random.Range(-offsetRange, offsetRange), 0, 0), speed).SetSpeedBased().SetEase(Ease.Linear).OnComplete(() =>
         {
             if (isUnderUmbrella > 0)
             {
-                curHealth -= healthDecreaseAmount;
                 isUnderUmbrella -= 1;
                 if(isUnderUmbrella == 0)
                 {
-                    umbrellaObject.SetActive(false);
+                    umbrellaObject[0].GetComponent<hatBullet>().FallOf();
+                    umbrellaObject.RemoveAt(0);
                 }
+            }
+            else
+            {
+                curHealth -= healthDecreaseAmount;
             }
             if (curHealth == 0)
             {

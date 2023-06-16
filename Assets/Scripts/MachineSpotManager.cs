@@ -54,7 +54,7 @@ public class MachineSpotManager : MonoBehaviour
         machinePrefabName = "sunscreen";
         haveMachineOnIt = true;
         ResetAndClose();
-        machinePlaceObject.SetActive(false);
+        //machinePlaceObject.SetActive(false);
 
     }
 
@@ -74,7 +74,7 @@ public class MachineSpotManager : MonoBehaviour
         haveMachineOnIt = true;
         machinePrefabName = "hat";
         ResetAndClose();
-        machinePlaceObject.SetActive(false);
+        //machinePlaceObject.SetActive(false);
 
     }
     public void CatapultPreviewButtonPressed()
@@ -93,7 +93,8 @@ public class MachineSpotManager : MonoBehaviour
         haveMachineOnIt = true;
         machinePrefabName = "catapult";
         ResetAndClose();
-        machinePlaceObject.SetActive(false);
+        
+        //machinePlaceObject.SetActive(false);
 
     }
     public void ResetAndClose()
