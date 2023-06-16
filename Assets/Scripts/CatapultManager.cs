@@ -7,26 +7,29 @@ public class CatapultManager : MonoBehaviour
 {
     // Start is called before the first frame update
     private Transform target;
-    public GameObject sunscreenGuy;
-    public GameObject tube;
-
+    public GameObject catapultArm;
+    public GameObject fireArm;
 
     [Header("Attributes")]
     public float fireRate = 1f;
     private float fireCountdown = 0f;
     public float range = 15f;
-
+    public int price;
+    public int upgradePrice;
     [Header("Unity Setup Fields")]
 
     public Transform partToRotate;
-    public Transform partToRotate2;
     public float turnSpeed = 10f;
     public GameObject previewObject;
     public GameObject bulletPreFab;
     public Transform firePoint;
+    public bool isInAnimation = false;
+    public GameObject bulletGo;
+    public int coolEffectPower;
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("wer");
         InvokeRepeating("UpdateTarget", 0f, 0.2f);
     }
 
@@ -65,46 +68,71 @@ public class CatapultManager : MonoBehaviour
         Vector3 dir = target.position - transform.position;
         Quaternion lookRotation = Quaternion.LookRotation(dir);
         Vector3 rotation = Quaternion.Lerp(partToRotate.rotation, lookRotation, Time.deltaTime * turnSpeed).eulerAngles;
-        partToRotate.parent.rotation = Quaternion.Euler(0f, rotation.y, 0f);
-        partToRotate2.parent.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+        partToRotate.rotation = Quaternion.Euler(0f, rotation.y, 0f);
 
         if (fireCountdown <= 0f)
         {
-            Shoot();
             fireCountdown = 1f / fireRate;
+            isInAnimation = true;
+            Shoot();
         }
-
-        fireCountdown -= Time.deltaTime;
+        if(isInAnimation == false)
+        {
+            fireCountdown -= Time.deltaTime;
+        }
     }
 
     void Shoot()
     {
-        float originalYPos = sunscreenGuy.transform.localPosition.y;
-        sunscreenGuy.transform.DOLocalMoveY(originalYPos + 2, 0.5f).OnComplete(() =>
+        Debug.Log("sa");
+        fireArm.transform.DOLocalRotate(new Vector3(-30, -90, -90), 0.3f).OnComplete(() =>
         {
-            sunscreenGuy.transform.DOLocalMoveY(originalYPos, 0.5f).SetEase(Ease.Linear).OnComplete(() =>
+            fireArm.transform.DOLocalRotate(new Vector3(-90, -90, -90), 0.3f);
+            catapultArm.transform.DOLocalRotate(new Vector3(0, -80, 0), 0.2f).SetEase(Ease.OutBounce).OnComplete(() =>
             {
-                float originalZScale = tube.transform.localScale.z;
-                tube.transform.DOScaleZ(originalZScale * 0.8f, 0.2f).OnComplete(() =>
-                {
-                    tube.transform.DOScaleZ(originalZScale, 0.2f);
-                });
-
-                GameObject bulletGO = Instantiate(bulletPreFab, firePoint.position, firePoint.rotation);
-                Bullet bullet = bulletGO.GetComponent<Bullet>();
+                BallonBullet bullet = bulletGo.GetComponent<BallonBullet>();
 
                 if (bullet != null)
                 {
-                    bullet.Seek(target);
+                    bullet.Seek(target, coolEffectPower);
                 }
-
+                isInAnimation = false;
+                bullet = null;
+                catapultArm.transform.DOLocalRotate(new Vector3(0, -20, 0), 0.5f).SetEase(Ease.OutBounce).OnComplete(() =>
+                {
+                    bulletGo = Instantiate(bulletPreFab, firePoint.transform);
+                });
             });
         });
-
     }
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, range);
+    }
+    public void Upgrade()
+    {
+        if (GameDataManager.Instance.totalMoney > upgradePrice)
+        {
+            coolEffectPower *= 2;
+            upgradePrice *= 2;
+            transform.DOScale(transform.localScale * 1.2f, 1f).OnComplete(() =>
+            {
+                //BURADA BÝR PARTÝCLE EFFECT GEREKLÝ
+            });
+            GameDataManager.Instance.totalMoney -= upgradePrice;
+            UIManager.Instance.moneyText.text = GameDataManager.Instance.totalMoney.ToString();
+        }
+
+    }
+    public void Sell()
+    {
+        Debug.Log("SUNSCREEN");
+        GameDataManager.Instance.totalMoney -= price / 2;
+        UIManager.Instance.moneyText.text = GameDataManager.Instance.totalMoney.ToString();
+        transform.DOShakeRotation(1, 50, 3, 50).OnComplete(() =>
+        {
+            Destroy(this.gameObject);
+        });
     }
 }

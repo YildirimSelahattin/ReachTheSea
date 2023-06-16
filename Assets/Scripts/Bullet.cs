@@ -10,19 +10,20 @@ public class Bullet : MonoBehaviour
     public float speed = 70f;
     public float explosionRadius = 0f;
     public GameObject impactEffect;
-    public void Seek(Transform _target)
+    public void Seek(Transform _target,int coolEffectPower)
     {
         target = _target;
-        ShootTarget();
+        ShootTarget(coolEffectPower);
     }
 
-    public void ShootTarget()
+    public void ShootTarget(int coolEffectPower)
     {
         transform.parent = target.transform;
-        transform.DOLocalMove(new Vector3(0,3,0), speed).OnComplete(() =>
+        transform.DOLocalJump(new Vector3(0,4,0),1,1, speed).OnComplete(() =>
         {
-            GameObject effectIns = Instantiate(impactEffect, transform.position, transform.rotation);
-            target.gameObject.GetComponent<PeopleManager>().CoolOf();
+            Debug.Log("asd");
+            GameObject effectIns = Instantiate(impactEffect, transform.position, impactEffect.transform.rotation);
+            target.gameObject.GetComponent<PeopleManager>().CoolOf(coolEffectPower);
             Destroy(gameObject);
         });
 
@@ -45,6 +46,7 @@ public class Bullet : MonoBehaviour
     {
         if (other.CompareTag("People"))// it hitted to people 
         {
+           
         }
     }
  

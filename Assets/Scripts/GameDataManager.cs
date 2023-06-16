@@ -9,7 +9,10 @@ public class GameDataManager : MonoBehaviour
     public static GameDataManager Instance;
     public int currentLevel;
     public int playSound = 1;
-
+    public int totalMoney ;
+    public float catapultPrice;
+    public float hatMachinePrice;
+    public float sunScreenPrice;
     // Start is called before the first frame update
 
     void Awake()
@@ -36,9 +39,15 @@ public class GameDataManager : MonoBehaviour
     {
 
     }
+
     public void LoadData()
     {
         data = JsonUtility.FromJson<DataList>(JSONText.text);
-        // currentLevel = PlayerPrefs.GetInt("CurrentLevel", 1);
+        //totalMoney = PlayerPrefs.GetInt("totalMoney",0 );
+        //currentLevel = PlayerPrefs.GetInt("CurrentLevel", 1);
+    }
+
+    public void ControlMoneyButtons()
+    {
     }
 }

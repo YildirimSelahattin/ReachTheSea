@@ -26,16 +26,16 @@ public class MachineGenerator : MonoBehaviour
 
     }
 
-    public void CreateSunscreenMachine(Transform parent)
+    public GameObject CreateSunscreenMachine(Transform parent)
     {
-        Instantiate(machines[0], parent);
+         return Instantiate(machines[0], parent);
     }
-    public void CreateUmbrellaMachine(RaycastHit hit)
+    public GameObject CreateCatapultMachine(Transform parent)
     {
-        Instantiate(machines[1], hit.collider.gameObject.transform.parent.parent);
+        return Instantiate(machines[1], parent);
     }
-    public void mach3Create(RaycastHit hit)
+    public GameObject CreateSunHatMachine(Transform parent)
     {
-        Instantiate(machines[2], hit.collider.gameObject.transform.parent.parent);
+        return Instantiate(machines[2], parent);
     }
 }

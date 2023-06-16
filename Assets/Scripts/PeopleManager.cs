@@ -11,22 +11,26 @@ public class PeopleManager : MonoBehaviour
     public float curHealth;
     public float healthDecreaseAmount;
     public List<int> positionIndexList;
-    public float offsetRange = 0.004f;
+    public float offsetRange = 0.002f;
     Vector3 leftDirection = new Vector3(0, -90, 0);
     Vector3 rightDirection = new Vector3(0, 90, 0);
     Vector3 upDirection = new Vector3(0, 180, 0);
     Vector3 downDirection = new Vector3(0, -180, 0);
     Color originalSkinColor;
+    public GameObject rotatingPart;
     public GameObject modelParent;
     public GameObject character;
     public GameObject dangerousIcon;
     public int peopleIndex;
-    public bool isUnderUmbrella;
+    public int isUnderUmbrella;
+    public GameObject umbrellaObject;
+    public float reachMoney = 10;
+    public GameObject healEffect;
     void Start()
     {
         curHealth = maxhealth;
         originalSkinColor = character.GetComponent<MeshRenderer>().materials[0].color;
-        
+
 
     }
 
@@ -47,35 +51,45 @@ public class PeopleManager : MonoBehaviour
     }
     public void MoveToNextIndex(int index)
     {
-        Debug.Log(index+"as");
-        if (index == positionIndexList.Count-1)
+        if (index == LevelSpawner.Instance.currentLevelScript.roadObjectList.Count - 1)// if it reach to sea
         {
+            Debug.Log("qwe");
             transform.parent = LevelSpawner.Instance.currentLevelScript.seaJumpingPos.transform;
-            transform.DOLocalJump(new Vector3(Random.Range(-offsetRange,offsetRange),0,0),3,1,1f).OnComplete(()=>gameObject.SetActive(false));
-
+            transform.DOLocalJump(new Vector3(Random.Range(-offsetRange, offsetRange), 0, 0), 3, 1, 1f).OnComplete(() =>
+            {
+                gameObject.SetActive(false);
+                GameManager.Instance.currentMoney += 50;
+                GameDataManager.Instance.totalMoney += (int)reachMoney;
+                UIManager.Instance.moneyParticle.SetActive(true);
+            });
             return;
         }
         transform.parent = LevelSpawner.Instance.currentLevelScript.roadObjectList[index].transform;
         if (maxhealth != curHealth && curHealth > 0)
         {
-            Debug.Log("sa");
             float redRatio = (maxhealth - curHealth) / maxhealth;
-            Debug.Log(213 * redRatio);
-            Debug.Log(208 * redRatio);
             character.transform.GetComponent<MeshRenderer>().materials[0].DOKill();
             character.transform.GetComponent<MeshRenderer>().materials[0].DOColor(new Color32((byte)(240), (byte)(213 - 213 * redRatio), (byte)(208 - 208 * redRatio), 1), speed).SetSpeedBased();
         }
         transform.DOLocalMove(new Vector3(Random.Range(-offsetRange, offsetRange), 0, 0), speed).SetSpeedBased().SetEase(Ease.Linear).OnComplete(() =>
         {
-            if(isUnderUmbrella == false)
+            if (isUnderUmbrella > 0)
             {
                 curHealth -= healthDecreaseAmount;
+                isUnderUmbrella -= 1;
+                if(isUnderUmbrella == 0)
+                {
+                    umbrellaObject.SetActive(false);
+                }
             }
             if (curHealth == 0)
             {
-                transform.DOLocalMoveX(1, 0.5f);
-                transform.DOLocalRotate(new Vector3(0,0,90),0.5f);
-                AmbulanceGenerator.Instance.CreateAmbulance(peopleIndex);
+                modelParent.transform.DOKill();
+                transform.DOKill();
+                transform.parent = null;
+                transform.DOLocalRotate(new Vector3(0, 0, 90), 0.5f);
+                PeopleGenerator.Instance.peopleObjectList.Remove(gameObject);
+                AmbulanceGenerator.Instance.CreateAmbulance(gameObject);
                 return;
             }
             if (curHealth == 1)
@@ -93,22 +107,23 @@ public class PeopleManager : MonoBehaviour
 
     public void ChangeRotation(int index)
     {
-        transform.DOLookAt(LevelSpawner.Instance.currentLevelScript.roadObjectList[index+1].transform.position,0.2f);
+        rotatingPart.transform.DOLookAt(LevelSpawner.Instance.currentLevelScript.roadObjectList[index + 1].transform.position, 0.2f);
     }
 
     public void MoveShake()
     {
-        modelParent.transform.DOLocalRotate(new Vector3(0, 0, -5.5f), curHealth/maxhealth).OnComplete(() =>
+        modelParent.transform.DOLocalRotate(new Vector3(0, 0, -5.5f), curHealth / maxhealth).OnComplete(() =>
         {
-            modelParent.transform.DOLocalRotate(new Vector3(0, 0, 5.5f),curHealth / maxhealth).OnComplete(() => MoveShake());
+            modelParent.transform.DOLocalRotate(new Vector3(0, 0, 5.5f), curHealth / maxhealth).OnComplete(() => MoveShake());
         });
     }
-    public void CoolOf()
+    public void CoolOf(int healthIncrease)
     {
         if (curHealth < maxhealth)
         {
-            curHealth++;
+            curHealth+= healthIncrease;
             float redRatio = (maxhealth - curHealth) / maxhealth;
+            healEffect.SetActive(true);
             character.transform.GetComponent<MeshRenderer>().materials[0].DOKill();
             character.transform.GetComponent<MeshRenderer>().materials[0].DOColor(new Color32((byte)(240), (byte)(213 - 213 * redRatio), (byte)(208 - 208 * redRatio), 1), speed).SetSpeedBased();
         }

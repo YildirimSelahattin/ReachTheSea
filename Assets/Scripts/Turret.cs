@@ -16,7 +16,7 @@ public class Turret : MonoBehaviour
     public float fireRate = 1f;
     private float fireCountdown = 0f;
     public float range = 15f;
-
+    public int coolEffectPower;
     [Header("Unity Setup Fields")]
 
     public string enemyTag = "Enemy";
@@ -25,6 +25,8 @@ public class Turret : MonoBehaviour
     public GameObject previewObject;
     public GameObject bulletPreFab;
     public Transform firePoint;
+    public int price;
+    public int upgradePrice;
     // Start is called before the first frame update
     void Start()
     {
@@ -95,7 +97,7 @@ public class Turret : MonoBehaviour
 
                 if (bullet != null)
                 {
-                    bullet.Seek(target);
+                    bullet.Seek(target, coolEffectPower);
                 }
                 
             });
@@ -106,5 +108,31 @@ public class Turret : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, range);
+    }
+
+    public void Upgrade()
+    {
+        if (GameDataManager.Instance.totalMoney > upgradePrice)
+        {
+            coolEffectPower *= 2;
+            upgradePrice *= 2;
+            transform.DOScale(transform.localScale * 1.2f, 1f).OnComplete(() =>
+            {
+                //BURADA BÝR PARTÝCLE EFFECT GEREKLÝ
+            });
+            GameDataManager.Instance.totalMoney -= upgradePrice;
+            UIManager.Instance.moneyText.text = GameDataManager.Instance.totalMoney.ToString();
+        }
+       
+    }
+    public void Sell()
+    {
+        Debug.Log("SUNSCREEN");
+        GameDataManager.Instance.totalMoney -= price / 2;
+        UIManager.Instance.moneyText.text = GameDataManager.Instance.totalMoney.ToString();
+        transform.DOShakeRotation(1, 50, 3, 50).OnComplete(() =>
+        {
+            Destroy(this.gameObject);
+        });
     }
 }

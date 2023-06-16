@@ -12,7 +12,7 @@ public class HatTurretManager : MonoBehaviour
     public GameObject firePeople;
     public SkinnedMeshRenderer skinnedMeshCannon;
     public float waitingTime;
-
+    public GameObject particleEffect;
     [Header("Attributes")]
     public float fireRate = 1f;
     private float fireCountdown = 0f;
@@ -28,14 +28,16 @@ public class HatTurretManager : MonoBehaviour
     int stageKeyIndex;
     float maxKeyValue = 15;
     float tweenDuration = 0.3f;
-    bool isInShootAnimation = false;
+    public int price;
+    public int upgradePrice;
+    public bool isInShootAnimation = false;
     public float[] tweeningKeyVariables = new float[7];
-
+    public int hatEffectPower;
     // Start is called before the first frame update
     void Start()
     {
 
-        InvokeRepeating("UpdateTarget", 0f, 0.2f);
+        InvokeRepeating("UpdateTarget", 0f, 0.4f);
     }
 
     void UpdateTarget()
@@ -65,84 +67,99 @@ public class HatTurretManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*
-         *        if (target == null)
-               {
-                   return;
-               }
-               //target lock on
-               Vector3 dir = target.position - transform.position;
-               Quaternion lookRotation = Quaternion.LookRotation(dir);
-               Vector3 rotation = Quaternion.Lerp(partToRotate.rotation, lookRotation, Time.deltaTime * turnSpeed).eulerAngles;
-               partToRotate.rotation = Quaternion.Euler(0f, rotation.y, 0f);
-        */
+        if (target == null)
+        {
+            return;
+        }
+        //target lock on
+        Vector3 dir = target.position - transform.position;
+        Quaternion lookRotation = Quaternion.LookRotation(dir);
+        Vector3 rotation = Quaternion.Lerp(partToRotate.rotation, lookRotation, Time.deltaTime * turnSpeed).eulerAngles;
+        partToRotate.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+        
         if (fireCountdown <= 0f)
         {
             StartCoroutine(StartMoveAfterTime(0));
-            isInShootAnimation = false;
+            isInShootAnimation = true;
             fireCountdown = 1f / fireRate;
         }
-        if(isInShootAnimation != true)
+        if (isInShootAnimation != true)
         {
             fireCountdown -= Time.deltaTime;
         }
-
-      
     }
     void Shoot()
     {
-        Debug.Log("shooooooooooooooot");
-        transform.DORotate(new Vector3(-12,0,0),0.1f);
         GameObject bulletGO = Instantiate(bulletPreFab, firePoint.position, firePoint.rotation);
-        Bullet bullet = bulletGO.GetComponent<Bullet>();
-
+        hatBullet bullet = bulletGO.GetComponent<hatBullet>();
+        particleEffect.SetActive(true);
         if (bullet != null)
         {
-            bullet.Seek(target);
+            bullet.Seek(target, hatEffectPower);
         }
     }
 
     public void AnimateCannonExplosion(int index)
     {
         Tween keyTween = DOTween.To(() => tweeningKeyVariables[index],
-        x => tweeningKeyVariables[index] = x,30, tweenDuration).OnComplete(() =>
+        x => tweeningKeyVariables[index] = x, 100, tweenDuration).OnComplete(() =>
         {
             Tween expandTween = DOTween.To(() => tweeningKeyVariables[index],
             x => tweeningKeyVariables[index] = x, 0, tweenDuration);
-            expandTween.OnUpdate( ()=>UpdateCannonMesh(index, tweeningKeyVariables[index]));
+            expandTween.OnUpdate(() => UpdateCannonMesh(index, tweeningKeyVariables[index])).OnComplete(() =>
+            {
+                if(index == 5)
+                {
+                    isInShootAnimation = false;
+                    Shoot();
+                }
+            });
         });
     }
 
-    public void UpdateCannonMesh(int index,float tweeningKeyVariable)
+    public void UpdateCannonMesh(int index, float tweeningKeyVariable)
     {
-        Debug.Log("sa");
-        skinnedMeshCannon.SetBlendShapeWeight(index,tweeningKeyVariable);
+        skinnedMeshCannon.SetBlendShapeWeight(index, tweeningKeyVariable);
     }
 
     public IEnumerator StartMoveAfterTime(int index)
     {
         yield return new WaitForSeconds(0.05f);
         AnimateCannonExplosion(index);
-        if(index <7)
+        if (index < 7)
         {
-            StartCoroutine(StartMoveAfterTime(index+1));
+            StartCoroutine(StartMoveAfterTime(index + 1));
         }
     }
-    public void OnCannonMeshCompleted()
-    {
-        if (stageKeyIndex == 6)
-        {
-            isInShootAnimation = false;
-            Shoot();
-        }
-        else
-        {
-            stageKeyIndex++;
-        }
-    }
+
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, range);
+    }
+    public void Upgrade()
+    {
+        if (GameDataManager.Instance.totalMoney > upgradePrice)
+        {
+            hatEffectPower *= 2/3;
+            upgradePrice *= 2;
+            transform.DOScale(transform.localScale * 1.2f, 1f).OnComplete(() =>
+            {
+                //BURADA BÝR PARTÝCLE EFFECT GEREKLÝ
+            });
+            GameDataManager.Instance.totalMoney -= upgradePrice;
+            UIManager.Instance.moneyText.text = GameDataManager.Instance.totalMoney.ToString();
+        }
+
+    }
+    public void Sell()
+    {
+        Debug.Log("SUNSCREEN");
+        GameDataManager.Instance.totalMoney -= price / 2;
+        UIManager.Instance.moneyText.text = GameDataManager.Instance.totalMoney.ToString();
+        transform.DOShakeRotation(1, 50, 3, 50).OnComplete(() =>
+        {
+            Destroy(this.gameObject);
+        });
     }
 }

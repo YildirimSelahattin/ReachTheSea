@@ -16,16 +16,16 @@ public class AmbulanceManager : MonoBehaviour
         
     }
 
-    public void MoveToPeople(int peopleIndex)
+    public void MoveToPeople(GameObject people)
     {
-        Vector3 pos = PeopleGenerator.Instance.peopleObjectList[peopleIndex].transform.position;
-        pos.y = 2;
+        Vector3 pos = people.transform.position;
         transform.DOMove(pos, 2f).OnComplete(() =>
         {
-            PeopleGenerator.Instance.peopleObjectList[peopleIndex].transform.parent = transform;
-            PeopleGenerator.Instance.peopleObjectList[peopleIndex].transform.DOLocalJump(new Vector3(0, 0, 0), 4, 1, 0.5f).OnComplete(() =>
+
+            people.transform.DOJump(transform.position+Vector3.forward*0.02f, 4, 1, 0.5f).OnComplete(() =>
             {
-                transform.DOLocalMove(new Vector3(0,0,0),1f);
+                people.transform.parent = transform;
+                transform.DOLocalMove(new Vector3(0,0,0),2f).OnComplete(()=>Destroy(this.gameObject));
             });
         });
     }

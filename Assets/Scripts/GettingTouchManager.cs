@@ -1,9 +1,6 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
-using Unity.Burst.CompilerServices;
-using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 
 public class GettingTouchManager : MonoBehaviour
@@ -11,9 +8,11 @@ public class GettingTouchManager : MonoBehaviour
     RaycastHit hit;
     Ray ray;
     public GameObject touchedMachineSpot;
+    public GameObject touchedMachine;
     [SerializeField] LayerMask touchableMachineSpotLayer;
     [SerializeField] LayerMask floorTouchableLayer;
     [SerializeField] LayerMask machinebuyingButtonsLayer;
+    [SerializeField] LayerMask machineLayer;
 
     public Vector3 touchStartPos;
     public GameObject turret;
@@ -29,6 +28,7 @@ public class GettingTouchManager : MonoBehaviour
     {
         if (Input.touchCount > 0)
         {
+            //For ray purposes
             curTouchPosition = Input.GetTouch(0).position;
             ray = Camera.main.ScreenPointToRay(curTouchPosition);
 
@@ -45,29 +45,93 @@ public class GettingTouchManager : MonoBehaviour
                         case "sunScreenBuyButton":
                             touchedMachineSpot.GetComponent<MachineSpotManager>().SunscreenBuyButtonPressed();
                             break;
+                        case "catapultPreviewButton":
+                            touchedMachineSpot.GetComponent<MachineSpotManager>().CatapultPreviewButtonPressed();
+                            break;
+                        case "catapultBuyButton":
+                            touchedMachineSpot.GetComponent<MachineSpotManager>().CatapultBuyButtonPressed();
+                            break;
+                        case "sunHatPreviewButton":
+                            touchedMachineSpot.GetComponent<MachineSpotManager>().HatPreviewButtonPressed();
+                            break;
+                        case "sunHatBuyButton":
+                            touchedMachineSpot.GetComponent<MachineSpotManager>().HatBuyButtonPressed();
+                            break;
+                        case "upgradeButton":
+                            touchedMachineSpot.GetComponent<MachineSpotManager>().UpgradeMachine();
+                            break;
+                        case "deleteButton":
+                            touchedMachineSpot.GetComponent<MachineSpotManager>().SellMachine();
+                            break;
                     }
+                    touchedMachine = null;
+                }
+                else if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity, machineLayer))
+                {
+                    touchedMachine = hit.collider.gameObject;
+                    if (touchedMachine.transform.GetChild(0).gameObject.active == false)
+                    {
+                        touchedMachine.transform.GetChild(0).gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        touchedMachine.transform.GetChild(0).gameObject.SetActive(false);
+                    }
+                    touchedMachine = null;
                 }
                 else if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity, touchableMachineSpotLayer)) // if it hit to a machine object
                 {
-                    if(touchedMachineSpot == hit.collider.gameObject)
+                    if (touchedMachineSpot == null)
                     {
+                        touchedMachineSpot = hit.collider.gameObject;
+                        if (touchedMachineSpot.GetComponent<MachineSpotManager>().haveMachineOnIt == true)
+                        {
+                            touchedMachineSpot.GetComponent<MachineSpotManager>().UpgradePanel();
+                        }
+                        else
+                        {
+
+                            touchedMachineSpot.GetComponent<MachineSpotManager>().OpenBuyPanel();
+                        }
+                    }
+                    else if (touchedMachineSpot == hit.collider.gameObject) // presses 
+                    {
+                        Debug.Log("heay");
                         touchedMachineSpot.GetComponent<MachineSpotManager>().ResetAndClose();
                         touchedMachineSpot = null;
                     }
-                    
                     else
                     {
+                        touchedMachineSpot.GetComponent<MachineSpotManager>().ResetAndClose();
                         touchedMachineSpot = hit.collider.gameObject;
-                        touchedMachineSpot.GetComponent<MachineSpotManager>().buttonLayout.SetActive(true);
+                        if (touchedMachineSpot.GetComponent<MachineSpotManager>().haveMachineOnIt == true)
+                        {
+                            touchedMachineSpot.GetComponent<MachineSpotManager>().UpgradePanel();
+                        }
+                        else
+                        {
+                            touchedMachineSpot.GetComponent<MachineSpotManager>().OpenBuyPanel();
+                        }
                     }
-
                 }
-                else if(Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity, floorTouchableLayer)) // if it hit to a machine object
+           
+                else if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity, floorTouchableLayer)) // if it hit to a machine object
                 {
-                    touchedMachineSpot.GetComponent<MachineSpotManager>().ResetAndClose();
+                    Debug.Log("Emir");
+                    if (touchedMachineSpot != null)
+                    {
+                        touchedMachineSpot.GetComponent<MachineSpotManager>().ResetAndClose();
+                        
+                    }
+                    if(touchedMachine != null)
+                    {
+                        touchedMachine.transform.GetChild(0).gameObject.SetActive(false);
+                    }
                     touchedMachineSpot = null;
+                    touchedMachine = null;
                 }
-                
+
+
             }
             else if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
             {

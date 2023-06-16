@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,7 +26,8 @@ public class PeopleGenerator : MonoBehaviour
     public void GeneratePeople()
     {
         //firstMove
-        StartCoroutine(Generate(0));
+        LevelSpawner.Instance.currentLevelScript.spawnGates.transform.DOScaleZ(0,1f).OnComplete(() => StartCoroutine(Generate(0)));
+
     }
 
     public IEnumerator Generate(int numberSoFar)
@@ -33,7 +35,7 @@ public class PeopleGenerator : MonoBehaviour
         yield return new WaitForSeconds(6);
         if(numberSoFar != GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].howManyPeopleToGenerate)
         {
-            GameObject temp=Instantiate(peoplePrefabList[Random.Range(0,peopleObjectList.Count)], LevelSpawner.Instance.currentLevelScript.spawnerPos.transform);
+            GameObject temp=Instantiate(peoplePrefabList[Random.Range(0,peoplePrefabList.Count)], LevelSpawner.Instance.currentLevelScript.spawnerPos.transform);
             temp.name = "People";
             temp.GetComponent<PeopleManager>().peopleIndex = numberSoFar;
             temp.GetComponent<PeopleManager>().MoveStart();

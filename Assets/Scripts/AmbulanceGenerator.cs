@@ -6,7 +6,6 @@ public class AmbulanceGenerator : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject ambulancePrefab;
-    public GameObject ambulanceParent;
     public static AmbulanceGenerator Instance;
     void Start()
     {
@@ -22,10 +21,10 @@ public class AmbulanceGenerator : MonoBehaviour
         
     }
     
-    public void CreateAmbulance(int peopleIndex)
+    public void CreateAmbulance(GameObject people)
     {
-        GameObject ambulance=Instantiate(ambulancePrefab,ambulanceParent.transform);
-        ambulance.GetComponent<AmbulanceManager>().MoveToPeople(peopleIndex);
+        GameObject ambulance=Instantiate(ambulancePrefab,LevelSpawner.Instance.currentLevelScript.ambulanceSpawnerPos.transform);
+        ambulance.GetComponent<AmbulanceManager>().MoveToPeople(people);
     }
 
 }

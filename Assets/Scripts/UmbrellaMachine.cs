@@ -19,14 +19,11 @@ public class UmbrellaMachine : MonoBehaviour
     {
         if (other.transform.CompareTag("People"))
         {
-            other.gameObject.GetComponent<PeopleManager>().isUnderUmbrella= true;
+            other.gameObject.GetComponent<PeopleManager>().isUnderUmbrella= 3;
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.transform.CompareTag("People"))
-        {
-            other.gameObject.GetComponent<PeopleManager>().isUnderUmbrella = false;
-        }
+       
     }
 }
