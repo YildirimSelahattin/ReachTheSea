@@ -143,7 +143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxhealth: 10
   curHealth: 0
-  healthDecreaseAmount: 1
+  healthDecreaseAmount: 2
   positionIndexList: 
   offsetRange: 0.004
   rotatingPart: {fileID: 1459888713858324327}
