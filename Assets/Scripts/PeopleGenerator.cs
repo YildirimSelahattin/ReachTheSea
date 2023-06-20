@@ -26,7 +26,7 @@ public class PeopleGenerator : MonoBehaviour
     public void GeneratePeople()
     {
         //firstMove
-        LevelSpawner.Instance.currentLevelScript.spawnGates.transform.DOScaleZ(0,1f).OnComplete(() => StartCoroutine(Generate(0)));
+        LevelSpawner.Instance.currentLevelScript.spawnGates.transform.DOScaleZ(0,3f).OnComplete(() => StartCoroutine(Generate(0)));
 
     }
 

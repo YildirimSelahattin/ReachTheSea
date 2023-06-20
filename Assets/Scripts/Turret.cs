@@ -27,10 +27,13 @@ public class Turret : MonoBehaviour
     public Transform firePoint;
     public int price;
     public int upgradePrice;
+    public int deletePrice;
     // Start is called before the first frame update
     void Start()
     {
         InvokeRepeating("UpdateTarget", 0f, 0.2f);
+        upgradePrice = (int)(price * 1.5f);
+        deletePrice = price / 2;
     }
 
     void UpdateTarget()
@@ -122,6 +125,8 @@ public class Turret : MonoBehaviour
                 //BURADA BÝR PARTÝCLE EFFECT GEREKLÝ
             });
             GameDataManager.Instance.totalMoney -= upgradePrice;
+            upgradePrice = (int)(upgradePrice * 1.5f);
+            deletePrice = (int)(deletePrice * 1.5f);
             UIManager.Instance.moneyText.text = GameDataManager.Instance.totalMoney.ToString();
         }
        

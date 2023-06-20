@@ -30,6 +30,7 @@ public class HatTurretManager : MonoBehaviour
     float tweenDuration = 0.3f;
     public int price;
     public int upgradePrice;
+    public int deletePrice;
     public bool isInShootAnimation = false;
     public float[] tweeningKeyVariables = new float[7];
     public int hatEffectPower;
@@ -38,6 +39,8 @@ public class HatTurretManager : MonoBehaviour
     {
 
         InvokeRepeating("UpdateTarget", 0f, 0.4f);
+        upgradePrice = (int)(price * 1.5f);
+        deletePrice = price / 2;
     }
 
     void UpdateTarget()
@@ -148,6 +151,8 @@ public class HatTurretManager : MonoBehaviour
                 //BURADA BÝR PARTÝCLE EFFECT GEREKLÝ
             });
             GameDataManager.Instance.totalMoney -= upgradePrice;
+            upgradePrice = (int)(upgradePrice * 1.5f);
+            deletePrice =(int)( deletePrice * 1.5f);
             UIManager.Instance.moneyText.text = GameDataManager.Instance.totalMoney.ToString();
         }
 

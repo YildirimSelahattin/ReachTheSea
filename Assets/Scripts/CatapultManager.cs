@@ -16,6 +16,7 @@ public class CatapultManager : MonoBehaviour
     public float range = 15f;
     public int price;
     public int upgradePrice;
+    public int deletePrice;
     [Header("Unity Setup Fields")]
 
     public Transform partToRotate;
@@ -31,6 +32,8 @@ public class CatapultManager : MonoBehaviour
     {
         Debug.Log("wer");
         InvokeRepeating("UpdateTarget", 0f, 0.2f);
+        upgradePrice = (int)(price * 1.5f);
+        deletePrice = price / 2;
     }
 
     void UpdateTarget()
@@ -121,6 +124,8 @@ public class CatapultManager : MonoBehaviour
                 //BURADA BÝR PARTÝCLE EFFECT GEREKLÝ
             });
             GameDataManager.Instance.totalMoney -= upgradePrice;
+            upgradePrice = (int)(upgradePrice * 1.5f);
+            deletePrice = (int)(deletePrice * 1.5f);
             UIManager.Instance.moneyText.text = GameDataManager.Instance.totalMoney.ToString();
         }
 

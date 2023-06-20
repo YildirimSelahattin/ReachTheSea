@@ -113,7 +113,21 @@ public class MachineSpotManager : MonoBehaviour
         }
         else
         {
-
+            switch (machinePrefabName)
+            {
+                case "sunScreen":
+                    upgradeMachinePriceText.text =  currentMachineOnIt.GetComponent<Turret>().upgradePrice.ToString();
+                    deleteMachinePriceText.text = currentMachineOnIt.GetComponent<Turret>().deletePrice.ToString();
+                    break;
+                case "hat":
+                    upgradeMachinePriceText.text =currentMachineOnIt.GetComponent<HatTurretManager>().upgradePrice.ToString();
+                    deleteMachinePriceText.text = currentMachineOnIt.GetComponent<Turret>().deletePrice.ToString();
+                    break;
+                case "catapult":
+                    upgradeMachinePriceText.text =currentMachineOnIt.GetComponent<CatapultManager>().upgradePrice.ToString();
+                    deleteMachinePriceText.text = currentMachineOnIt.GetComponent<Turret>().deletePrice.ToString();
+                    break;
+            }
             upgradeButtonLayout.SetActive(true);
         }
     }
