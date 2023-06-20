@@ -30,7 +30,7 @@ public class PeopleManager : MonoBehaviour
     void Start()
     {
         curHealth = maxhealth;
-        originalSkinColor = character.GetComponent<MeshRenderer>().materials[0].color;
+        originalSkinColor = character.GetComponent<MeshRenderer>().materials[0].GetColor("_BaseColor") ;
 
 
     }
@@ -62,7 +62,7 @@ public class PeopleManager : MonoBehaviour
                 GameManager.Instance.currentMoney += 50;
                 GameDataManager.Instance.totalMoney += (int)reachMoney;
                 GameManager.Instance.currentReachedPeople++;
-                UIManager.Instance.currentPeopleText.text = GameManager.Instance.currentReachedPeople.ToString();
+                UIManager.Instance.swimmingPeopleText.text = GameManager.Instance.currentReachedPeople.ToString();
                 UIManager.Instance.moneyParticle.SetActive(true);
             });
             return;
@@ -72,9 +72,9 @@ public class PeopleManager : MonoBehaviour
         {
             float redRatio = (maxhealth - curHealth) / maxhealth;
             character.transform.GetComponent<MeshRenderer>().materials[0].DOKill();
-            character.transform.GetComponent<MeshRenderer>().materials[0].DOColor(new Color32((byte)(240), (byte)(213 - 213 * redRatio), (byte)(208 - 208 * redRatio), 1), 0.1f);
+            character.transform.GetComponent<MeshRenderer>().materials[0].DOVector(new Vector4(240f/255f, (213 - 213 * redRatio)/255f, (208 - 208 * redRatio)/255f, 1), "_BaseColor", 0.1f);
         }
-        transform.DOLocalMove(new Vector3(Random.Range(-offsetRange, offsetRange), 0, 0), speed).SetSpeedBased().SetEase(Ease.Linear).OnComplete(() =>
+        transform.DOLocalMove(new Vector3(0, 0, 0), speed).SetSpeedBased().SetEase(Ease.Linear).OnComplete(() =>
         {
             if (isUnderUmbrella > 0)
             {
@@ -91,12 +91,17 @@ public class PeopleManager : MonoBehaviour
             }
             if (curHealth == 0)
             {
+                GameManager.Instance.currentBurnedPeople++;
+                UIManager.Instance.burnedPeopleText.text = GameManager.Instance.currentBurnedPeople.ToString();
                 modelParent.transform.DOKill();
                 transform.DOKill();
-                transform.parent = null;
                 transform.DOLocalRotate(new Vector3(0, 0, 90), 0.5f);
+                transform.DOScale(new Vector3(0.007f, 0.007f, 0.003f), 0.5f);
+                transform.DOLocalMove(new Vector3(0.001F, 0.0001F,0.003f), 0.5f).OnComplete(() =>
+                {
+                    AmbulanceGenerator.Instance.CreateAmbulance(gameObject);
+                });
                 PeopleGenerator.Instance.peopleObjectList.Remove(gameObject);
-                AmbulanceGenerator.Instance.CreateAmbulance(gameObject);
                 return;
             }
             if (curHealth == 1)
@@ -132,7 +137,11 @@ public class PeopleManager : MonoBehaviour
             float redRatio = (maxhealth - curHealth) / maxhealth;
             healEffect.SetActive(true);
             character.transform.GetComponent<MeshRenderer>().materials[0].DOKill();
-            character.transform.GetComponent<MeshRenderer>().materials[0].DOColor(new Color32((byte)(240), (byte)(213 - 213 * redRatio), (byte)(208 - 208 * redRatio), 1), speed).SetSpeedBased();
+            character.transform.GetComponent<MeshRenderer>().materials[0].DOVector(new Vector4(240f / 255f, (213 - 213 * redRatio) / 255f, (208 - 208 * redRatio) / 255f, 1), "_BaseColor", 0.1f);
+        }
+        else
+        {
+            Debug.Log("blablalbal");
         }
     }
 }

@@ -42,20 +42,11 @@ public class GettingTouchManager : MonoBehaviour
                         case "sunScreenPreviewButton":
                             touchedMachineSpot.GetComponent<MachineSpotManager>().SunscreenPreviewButtonPressed();
                             break;
-                        case "sunScreenBuyButton":
-                            touchedMachineSpot.GetComponent<MachineSpotManager>().SunscreenBuyButtonPressed();
-                            break;
                         case "catapultPreviewButton":
                             touchedMachineSpot.GetComponent<MachineSpotManager>().CatapultPreviewButtonPressed();
                             break;
-                        case "catapultBuyButton":
-                            touchedMachineSpot.GetComponent<MachineSpotManager>().CatapultBuyButtonPressed();
-                            break;
                         case "sunHatPreviewButton":
                             touchedMachineSpot.GetComponent<MachineSpotManager>().HatPreviewButtonPressed();
-                            break;
-                        case "sunHatBuyButton":
-                            touchedMachineSpot.GetComponent<MachineSpotManager>().HatBuyButtonPressed();
                             break;
                         case "upgradeButton":
                             touchedMachineSpot.GetComponent<MachineSpotManager>().UpgradeMachine();

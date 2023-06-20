@@ -91,15 +91,16 @@ public class Turret : MonoBehaviour
                 {
                     tube.transform.DOScaleZ(originalZScale, 0.2f);
                 });
-
-                GameObject bulletGO = Instantiate(bulletPreFab, firePoint.position, firePoint.rotation);
-                Bullet bullet = bulletGO.GetComponent<Bullet>();
-
-                if (bullet != null)
+                if (target != null)
                 {
-                    bullet.Seek(target, coolEffectPower);
+                    GameObject bulletGO = Instantiate(bulletPreFab, firePoint.position, firePoint.rotation);
+                    Bullet bullet = bulletGO.GetComponent<Bullet>();
+
+                    if (bullet != null)
+                    {
+                        bullet.Seek(target, coolEffectPower);
+                    }
                 }
-                
             });
         });
         

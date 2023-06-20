@@ -42,71 +42,67 @@ public class MachineSpotManager : MonoBehaviour
     {
         if (GameDataManager.Instance.totalMoney > GameDataManager.Instance.sunScreenPrice)
         {
-            sunscreenPreviewButton.SetActive(false);
-            sunscreenBuyButton.SetActive(true);
+            GameDataManager.Instance.totalMoney -= (int)GameDataManager.Instance.sunScreenPrice;
+            MachineGenerator.Instance.CreateSunscreenMachine(transform);
+            machinePrefabName = "sunscreen";
+            haveMachineOnIt = true;
+            ResetAndClose();
+            //machinePlaceObject.SetActive(false);
         }
     }
 
     public void SunscreenBuyButtonPressed()
     {
-        GameDataManager.Instance.totalMoney -=(int) GameDataManager.Instance.sunScreenPrice;
-        MachineGenerator.Instance.CreateSunscreenMachine(transform);
-        machinePrefabName = "sunscreen";
-        haveMachineOnIt = true;
-        ResetAndClose();
-        //machinePlaceObject.SetActive(false);
-
+  
     }
 
     public void HatPreviewButtonPressed()
     {
         if (GameDataManager.Instance.totalMoney > GameDataManager.Instance.hatMachinePrice)
         {
-            hatPreviewButton.SetActive(false);
-            hatBuyButton.SetActive(true);
+            GameDataManager.Instance.totalMoney -= (int)GameDataManager.Instance.hatMachinePrice;
+            currentMachineOnIt = MachineGenerator.Instance.CreateSunHatMachine(transform);
+            haveMachineOnIt = true;
+            machinePrefabName = "hat";
+            ResetAndClose();
+            //machinePlaceObject.SetActive(false);
         }
     }
 
     public void HatBuyButtonPressed()
     {
-        GameDataManager.Instance.totalMoney -= (int)GameDataManager.Instance.hatMachinePrice;
-        currentMachineOnIt = MachineGenerator.Instance.CreateSunHatMachine(transform);
-        haveMachineOnIt = true;
-        machinePrefabName = "hat";
-        ResetAndClose();
-        //machinePlaceObject.SetActive(false);
+        
 
     }
     public void CatapultPreviewButtonPressed()
     {
         if (GameDataManager.Instance.totalMoney > GameDataManager.Instance.catapultPrice)
         {
-            catapultPreviewButton.SetActive(false);
-            catapultBuyButton.SetActive(true);
+            GameDataManager.Instance.totalMoney -= (int)GameDataManager.Instance.catapultPrice;
+            currentMachineOnIt = MachineGenerator.Instance.CreateCatapultMachine(transform);
+            haveMachineOnIt = true;
+            machinePrefabName = "catapult";
+            ResetAndClose();
+            //machinePlaceObject.SetActive(false);
         }
     }
 
     public void CatapultBuyButtonPressed()
     {
-        GameDataManager.Instance.totalMoney -= (int)GameDataManager.Instance.catapultPrice;
-        currentMachineOnIt = MachineGenerator.Instance.CreateCatapultMachine(transform);
-        haveMachineOnIt = true;
-        machinePrefabName = "catapult";
-        ResetAndClose();
-        
-        //machinePlaceObject.SetActive(false);
+
 
     }
     public void ResetAndClose()
     {
-        sunscreenBuyButton.SetActive(false);
-        sunscreenPreviewButton.SetActive(true);
-        catapultBuyButton.SetActive(false);
-        catapultPreviewButton.SetActive(true);
-        hatBuyButton.SetActive(false);
-        hatPreviewButton.SetActive(true);
-        buttonLayout.SetActive(false);
-        upgradeButtonLayout.SetActive(false);
+        buttonLayout.transform.DOScale(Vector3.zero, 0.5f).OnComplete(() =>
+        {
+            sunscreenPreviewButton.SetActive(true);
+            catapultPreviewButton.SetActive(true);
+            hatPreviewButton.SetActive(true);
+            buttonLayout.SetActive(false);
+            upgradeButtonLayout.SetActive(false);
+        });
+   
     }
 
     public void UpgradePanel()
@@ -123,6 +119,8 @@ public class MachineSpotManager : MonoBehaviour
     }
     public void OpenBuyPanel()
     {
+        buttonLayout.transform.localScale = Vector3.zero;
+        buttonLayout.transform.DOScale(Vector3.one,0.5f);
         buttonLayout.SetActive(true);
         if (GameDataManager.Instance.totalMoney > GameDataManager.Instance.sunScreenPrice)
         {

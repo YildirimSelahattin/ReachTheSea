@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 
     private int _currentMoney = 50;
     public int currentReachedPeople = 0;
+    public int currentBurnedPeople = 0;
     public int currentMoney
     {
         get {
@@ -24,7 +25,9 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
     }
-
+    public void ControlGameFinished()
+    {
+    }
     // Update is called once per frame
     void Update()
     {

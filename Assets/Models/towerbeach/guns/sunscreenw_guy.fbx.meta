@@ -3,7 +3,57 @@ guid: cd280aed815d25d428b8cf0182b8538a
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.001
+    second: {fileID: 2100000, guid: 2020f748985e922448a73c9b4f0967ff, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: color
+    second: {fileID: 2100000, guid: b7a03184ba05a574fa3c520d264ef111, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: color.009
+    second: {fileID: 2100000, guid: eaac372409674ad4ca03694b703c161d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: eyeball
+    second: {fileID: 2100000, guid: ca1350c797039924f92e55dcdba9eee2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: eyeball_2
+    second: {fileID: 2100000, guid: bd95102a09f009345b0323a2c808bf9e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: hair.004
+    second: {fileID: 2100000, guid: 2b9175b4442cb6145adc326d2eb3ae98, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: skin
+    second: {fileID: 2100000, guid: 559c25d7ff0764d4697fc6b4546df22d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sunscreen-1
+    second: {fileID: 2100000, guid: 512d42aba4318b344916b144d34da09d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sunscreen-2
+    second: {fileID: 2100000, guid: b10b17caf0fa1524e8f92cda231440e0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sunscreen-2.001
+    second: {fileID: 2100000, guid: 38b7b4b08a48d3c44be3afbf7d3b6c0e, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

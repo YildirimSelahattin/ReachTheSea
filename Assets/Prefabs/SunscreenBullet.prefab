@@ -46,7 +46,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.18
+  m_Radius: 0.12
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &780354986224930029
 MonoBehaviour:
@@ -63,6 +63,7 @@ MonoBehaviour:
   speed: 0.6
   explosionRadius: 0
   impactEffect: {fileID: 100000, guid: 16177ac37e9c46e43af8f8945ceefba0, type: 3}
+  _coolEffectPower: 0
 --- !u!96 &3495791973963404305
 TrailRenderer:
   serializedVersion: 2
