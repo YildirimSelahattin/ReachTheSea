@@ -106,7 +106,7 @@ Material:
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _SpecularStep: 0.6
+    - _SpecularStep: 0
     - _SpecularStepSmooth: 0.05
     - _SrcBlend: 1
     - _Surface: 0
@@ -114,7 +114,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.96665674, g: 0.8991236, b: 0.5919916, a: 1}
+    - _BaseColor: {r: 0.5566038, g: 0.4127735, b: 0.17013171, a: 1}
     - _Color: {r: 0.96665674, g: 0.8991236, b: 0.5919916, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}

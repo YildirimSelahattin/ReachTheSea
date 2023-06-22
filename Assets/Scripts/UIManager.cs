@@ -11,6 +11,8 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI totalPeopleText;
     public TextMeshProUGUI burnedPeopleText;
     public TextMeshProUGUI swimmingPeopleText;
+    public TextMeshProUGUI waveText;
+    public TextMeshProUGUI totalWaveText;
     public GameObject moneyParticle;
     public static UIManager Instance;
     void Start()
@@ -19,8 +21,9 @@ public class UIManager : MonoBehaviour
         {
             Instance = this;
         }
+        totalWaveText.text = GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel-1].waveNumber.ToString();
         moneyText.text = GameDataManager.Instance.totalMoney.ToString();
-        totalPeopleText.text = GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel].howManyPeopleToGenerate.ToString();
+        totalPeopleText.text = GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel-1].howManyPeopleToGenerate.ToString();
         swimmingPeopleText.text = 0.ToString();
         burnedPeopleText.text = 0.ToString();
     }

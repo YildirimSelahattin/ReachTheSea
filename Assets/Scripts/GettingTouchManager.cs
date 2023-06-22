@@ -57,19 +57,7 @@ public class GettingTouchManager : MonoBehaviour
                     }
                     touchedMachine = null;
                 }
-                else if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity, machineLayer))
-                {
-                    touchedMachine = hit.collider.gameObject;
-                    if (touchedMachine.transform.GetChild(0).gameObject.active == false)
-                    {
-                        touchedMachine.transform.GetChild(0).gameObject.SetActive(true);
-                    }
-                    else
-                    {
-                        touchedMachine.transform.GetChild(0).gameObject.SetActive(false);
-                    }
-                    touchedMachine = null;
-                }
+           
                 else if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity, touchableMachineSpotLayer)) // if it hit to a machine object
                 {
                     if (touchedMachineSpot == null)

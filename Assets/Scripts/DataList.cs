@@ -8,10 +8,8 @@ public class DataList
     [System.Serializable]
     public class GeneralDataStructure
     {
-        public int gridHeight;
-        public int gridWidth;
-        public List<int> roadIndexes;
-        public int howManyPeopleToGenerate;
+        public float howManyPeopleToGenerate;
+        public float waveNumber;
     }
 
     public GeneralDataStructure[] levelsArray;

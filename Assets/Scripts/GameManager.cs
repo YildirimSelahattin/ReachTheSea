@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     void Start()
     {
-        if(Instance = null)
+        if(Instance == null)
         {
             Instance = this;
         }

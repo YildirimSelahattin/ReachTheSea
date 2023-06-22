@@ -243,7 +243,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.8, y: 3.829}
+  m_AnchoredPosition: {x: -0.8, y: 3.21}
   m_SizeDelta: {x: 6.56, y: 5.08}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &916176121716014974
@@ -405,8 +405,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3361539261315486851}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.45, z: -3.52}
-  m_LocalScale: {x: 3.3, y: 3.3, z: 3.3}
+  m_LocalPosition: {x: -0, y: 3.45, z: -4.99}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1946760628477965953}
@@ -612,8 +612,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4158934476475797371}
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -1, y: 3.03, z: 2}
-  m_LocalScale: {x: 0.52, y: 0.52, z: 0.52}
+  m_LocalPosition: {x: -1, y: 3.03, z: 3.04}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3064668982651217553}
@@ -683,7 +683,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.0000005, y: 1, z: 0.20000009}
+  m_Size: {x: 4.34, y: 7.15, z: 0.20000009}
   m_Center: {x: -0.00000035762787, y: 0, z: 0}
 --- !u!1 &4206158951952264944
 GameObject:
@@ -955,8 +955,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5.1100016, y: 4.7599998, z: 0.20000051}
-  m_Center: {x: -0.00000047683716, y: 0, z: 0.000000074505806}
+  m_Size: {x: 4.8705864, y: 8.48702, z: 0.20000051}
+  m_Center: {x: 0.11970587, y: -0.24410056, z: 0.00000025538878}
 --- !u!1 &5058731544690262380
 GameObject:
   m_ObjectHideFlags: 0
@@ -1054,8 +1054,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5.1100016, y: 4.7599998, z: 0.20000051}
-  m_Center: {x: -0.00000047683716, y: 0, z: 0.000000074505806}
+  m_Size: {x: 5.110001, y: 8.068768, z: 0.20000051}
+  m_Center: {x: -0.0000005506251, y: 0.21504922, z: 0.00000029012486}
 --- !u!1 &5786686293165941119
 GameObject:
   m_ObjectHideFlags: 0
@@ -1082,8 +1082,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5786686293165941119}
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -1, y: 3.03, z: -2}
-  m_LocalScale: {x: 0.52, y: 0.52, z: 0.52}
+  m_LocalPosition: {x: -1, y: 3.03, z: -2.41}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2094668067325605096}
@@ -1153,8 +1153,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.0000005, y: 1, z: 0.20000009}
-  m_Center: {x: -0.00000035762787, y: 0, z: 0}
+  m_Size: {x: 4.6239624, y: 4.4097023, z: 0.20000009}
+  m_Center: {x: 0.13376683, y: -1.7048502, z: 0.000008953051}
 --- !u!1 &5916979386623794614
 GameObject:
   m_ObjectHideFlags: 0
@@ -1422,7 +1422,7 @@ MonoBehaviour:
   machinePrefabName: 
   haveMachineOnIt: 0
   sunscreenMoneyText: {fileID: 8743581878092177886}
-  hatMachineMoneyText: {fileID: 8743581878092177886}
+  hatMachineMoneyText: {fileID: 24867503351006}
   catapultMoneyText: {fileID: 4452716019510741855}
   machineLevelNumber: 0
   upgradeMachinePriceText: {fileID: 1368225672905142275}
@@ -1464,8 +1464,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6991988795966033347}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 3.45, z: 2.32}
-  m_LocalScale: {x: 3.3, y: 3.3, z: 3.3}
+  m_LocalPosition: {x: 0, y: 3.45, z: 3.9}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6145009911433447625}
@@ -1580,8 +1580,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8456202719333152445}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 7.82, z: -0.55}
-  m_LocalScale: {x: 3.3, y: 3.3, z: 3.3}
+  m_LocalPosition: {x: -0, y: 9.84, z: -0.55}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5854631416522684848}
@@ -1685,8 +1685,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5.1100016, y: 4.7599998, z: 0.20000051}
-  m_Center: {x: -0.00000047683716, y: 0, z: 0.000000074505806}
+  m_Size: {x: 4.7927375, y: 8.456562, z: 0.20000051}
+  m_Center: {x: -0.1586314, y: 0.009979317, z: 0.0000003300304}
 --- !u!1001 &8000359385195336470
 PrefabInstance:
   m_ObjectHideFlags: 0
