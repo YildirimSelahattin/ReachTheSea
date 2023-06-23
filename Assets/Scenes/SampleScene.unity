@@ -205,6 +205,7 @@ MonoBehaviour:
   levelParent: {fileID: 2009224531}
   levelPrefabs:
   - {fileID: 983393756091328916, guid: 70acd4dbf749f0643a59edc4f1fe0078, type: 3}
+  - {fileID: 983393756091328916, guid: 448fb60b2d676c9418df1bbf9f31bc52, type: 3}
   currentLevelScript: {fileID: 0}
 --- !u!4 &241340057
 Transform:
@@ -1050,7 +1051,7 @@ MonoBehaviour:
   data:
     levelsArray: []
   JSONText: {fileID: 4900000, guid: e8774a8a2f6ee924cb8b7085f9bcf59d, type: 3}
-  currentLevel: 1
+  currentLevel: 2
   playSound: 1
   totalMoney: 60
   catapultPrice: 50

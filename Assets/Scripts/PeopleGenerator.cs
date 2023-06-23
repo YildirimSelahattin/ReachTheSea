@@ -99,18 +99,36 @@ public class PeopleGenerator : MonoBehaviour
             }
             else
             {
-                float random = Random.Range(0, 1);
-                if (random > 7)//sisko
-                {
-                    temp = Instantiate(peoplePrefabList[3], LevelSpawner.Instance.currentLevelScript.spawnerPos.transform);
-                }
-                else if (random > 3)//kýlýckdar
-                {
-                    temp = Instantiate(peoplePrefabList[2], LevelSpawner.Instance.currentLevelScript.spawnerPos.transform);
-                }
-                else if (random > 1)//delikanlý
+                int random = Random.Range(0, 100);
+                if (random > 60)//sisko
                 {
                     temp = Instantiate(peoplePrefabList[1], LevelSpawner.Instance.currentLevelScript.spawnerPos.transform);
+                }
+                else if (random > 40)
+                {
+                    if (Random.Range(0, 1) == 1)
+                    {
+
+                        temp = Instantiate(peoplePrefabList[1], LevelSpawner.Instance.currentLevelScript.spawnerPos.transform);
+
+                    }
+                    else
+                    {
+                        temp = Instantiate(peoplePrefabList[1], LevelSpawner.Instance.currentLevelScript.spawnerPos.transform);
+                    }
+                }
+                else if (random > 20)
+                {
+                    if (Random.Range(0, 1) == 1)
+                    {
+
+                        temp = Instantiate(peoplePrefabList[1], LevelSpawner.Instance.currentLevelScript.spawnerPos.transform);
+
+                    }
+                    else
+                    {
+                        temp = Instantiate(peoplePrefabList[1], LevelSpawner.Instance.currentLevelScript.spawnerPos.transform);
+                    }
                 }
                 else//kaykay
                 {
@@ -120,8 +138,17 @@ public class PeopleGenerator : MonoBehaviour
             numberOfPeople++;
             temp.name = "People";
             temp.GetComponent<PeopleManager>().peopleIndex = numberOfPeople;
-            temp.GetComponent<PeopleManager>().MoveStart();
+            if(GameDataManager.Instance.currentLevel == 1)
+            {
+                temp.GetComponent<PeopleManager>().maxhealth *= Mathf.Pow(0.7f, waveNumber - 1);
+            }
+            else
+            {
+                temp.GetComponent<PeopleManager>().maxhealth *= Mathf.Pow(0.95f, waveNumber - 1);
+            }
             peopleObjectList.Add(temp);
+            temp.GetComponent<PeopleManager>().MoveStart();
+
             StartCoroutine(Generate(numberSoFar + 1, 4, maxInWave));
         }
 

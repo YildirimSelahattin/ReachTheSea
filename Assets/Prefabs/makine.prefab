@@ -405,7 +405,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3361539261315486851}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 3.45, z: -4.99}
+  m_LocalPosition: {x: 0, y: 4.45, z: -4.99}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -1416,7 +1416,7 @@ MonoBehaviour:
   sunscreenBuyButton: {fileID: 0}
   catapultPreviewButton: {fileID: 5058731544690262380}
   catapultBuyButton: {fileID: 0}
-  hatPreviewButton: {fileID: 8591315015455561519}
+  hatPreviewButton: {fileID: 4377332992829291314}
   hatBuyButton: {fileID: 0}
   currentMachineOnIt: {fileID: 0}
   machinePrefabName: 
@@ -1464,7 +1464,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6991988795966033347}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.45, z: 3.9}
+  m_LocalPosition: {x: -0, y: 4.45, z: 3.9}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -1580,7 +1580,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8456202719333152445}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 9.84, z: -0.55}
+  m_LocalPosition: {x: -0, y: 10.84, z: -0.55}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children:

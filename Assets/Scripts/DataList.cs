@@ -10,6 +10,7 @@ public class DataList
     {
         public float howManyPeopleToGenerate;
         public float waveNumber;
+        public int startMoney;
     }
 
     public GeneralDataStructure[] levelsArray;

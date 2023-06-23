@@ -2,13 +2,15 @@
 "levelsArray":[
   
    {
-        "howManyPeopleToGenerate":330,
-        "waveNumber":3
+        "howManyPeopleToGenerate":60,
+        "waveNumber":3,
+         "startMoney":60
     },
     
    {
-        "howManyPeopleToGenerate":330,
-        "waveNumber":10
+        "howManyPeopleToGenerate":55,
+        "waveNumber":10,
+        "startMoney":200
     }
   ]
 }

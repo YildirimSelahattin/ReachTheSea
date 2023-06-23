@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 870177942021277143}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.64, y: 0.64, z: 0.64}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7207300341044577387}
@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02099f2538d7b4141a01b02200892c68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.02
+  speed: 0.005
   maxhealth: 10
   curHealth: 0
   healthDecreaseAmount: 2.5
@@ -542,6 +542,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1873771727844336295, guid: 7570da55f605703409a9be4abdd38ffb,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1873771727844336295, guid: 7570da55f605703409a9be4abdd38ffb,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1873771727844336295, guid: 7570da55f605703409a9be4abdd38ffb,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 5874663160636406907, guid: 7570da55f605703409a9be4abdd38ffb,
         type: 3}
