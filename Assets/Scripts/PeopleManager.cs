@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor.Rendering;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
+using UnityEngine.SceneManagement;
 
 public class PeopleManager : MonoBehaviour
 {
@@ -73,6 +74,13 @@ public class PeopleManager : MonoBehaviour
                 UIManager.Instance.moneyParticle.SetActive(true);
                 GameManager.Instance.currentReachedPeople++;
                 UIManager.Instance.swimmingPeopleText.text = GameManager.Instance.currentReachedPeople.ToString();
+                if (PeopleGenerator.Instance.peopleObjectList.Count ==0)
+                {
+                    GameDataManager.Instance.currentLevel++;
+                    GameDataManager.Instance.SaveData();
+                    SceneManager.LoadScene(0);
+                }
+                PeopleGenerator.Instance.peopleObjectList.Remove(gameObject);
             });
             return;
         }
@@ -116,8 +124,16 @@ public class PeopleManager : MonoBehaviour
                     AmbulanceGenerator.Instance.CreateAmbulance(gameObject);
                 });
                 transform.DOMoveY(13, 0.5f);
+                if (PeopleGenerator.Instance.peopleObjectList.Count == 0)
+                {
+                    GameDataManager.Instance.currentLevel++;
+                    GameDataManager.Instance.SaveData();
+                    SceneManager.LoadScene(0);
+                }
                 PeopleGenerator.Instance.peopleObjectList.Remove(gameObject);
+               
                 return;
+                
             }
             if (curHealth == 1)
             {

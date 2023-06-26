@@ -36,20 +36,19 @@ public class PeopleGenerator : MonoBehaviour
     {
         yield return new WaitForSeconds(timer);
         Debug.Log("numberSoFar" + numberSoFar);
-        if (numberSoFar == maxInWave)//baþka wave geliyor
+        if (numberSoFar == maxInWave)//baï¿½ka wave geliyor
         {
             waveNumber++;
             Debug.Log("wave" + waveNumber);
             UIManager.Instance.waveText.text = waveNumber.ToString();
-            if (waveNumber == GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].waveNumber + 1)
+            if (waveNumber != GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].waveNumber + 1)
             {
-                GameDataManager.Instance.currentLevel++;
-                GameDataManager.Instance.SaveData();
-                SceneManager.LoadScene(0);
+                
+                  int kisi = (int)(GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].howManyPeopleToGenerate * (waveNumber / (GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].waveNumber * (GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].waveNumber + 1) / 2)));
+                   Debug.Log(kisi + "kisi");
+                   StartCoroutine(Generate(0, timer, kisi));
             }
-            int kisi = (int)(GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].howManyPeopleToGenerate * (waveNumber / (GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].waveNumber * (GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].waveNumber + 1) / 2)));
-            Debug.Log(kisi + "kisi");
-            StartCoroutine(Generate(0, timer, kisi));
+         
         }
         else
         {
@@ -59,7 +58,7 @@ public class PeopleGenerator : MonoBehaviour
                 float random = Random.Range(0, 10);
                 if (waveNumber == 1)
                 {
-                    // hýzlý ortalama 
+                    // hï¿½zlï¿½ ortalama 
 
                     if (random > 4)
                     {
@@ -72,7 +71,7 @@ public class PeopleGenerator : MonoBehaviour
                 }
                 else if (waveNumber == 2)
                 {
-                    //ortalama hýzlý yaavas
+                    //ortalama hï¿½zlï¿½ yaavas
                     if (random > 4)
                     {
                         temp = Instantiate(peoplePrefabList[1], LevelSpawner.Instance.currentLevelScript.spawnerPos.transform);
