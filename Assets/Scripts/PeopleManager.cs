@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Rendering;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class PeopleManager : MonoBehaviour
 {
@@ -31,6 +32,8 @@ public class PeopleManager : MonoBehaviour
     public GameObject healthBar;
     public GameObject getHitEffect;
     public GameObject deathEffect;
+    public GameObject impactEffect;
+    public GameObject coinPrefab;
     void Start()
     {
  
@@ -61,6 +64,9 @@ public class PeopleManager : MonoBehaviour
             transform.parent = LevelSpawner.Instance.currentLevelScript.seaJumpingPos.transform;
             transform.DOLocalJump(new Vector3(Random.Range(-offsetRange, offsetRange), 0, 0), 3, 1, 1f).OnComplete(() =>
             {
+                GameObject effectIns = Instantiate(impactEffect, transform.position, impactEffect.transform.rotation);
+                GameObject coinPrefab_ = Instantiate(coinPrefab, UIManager.Instance.SafeArea.transform);
+                coinPrefab_.GetComponent<CoinEffect>().MoveCoins(UIManager.Instance.moneyText.transform.parent);
                 gameObject.SetActive(false);
                 GameDataManager.Instance.totalMoney += (int)reachMoney;
                 UIManager.Instance.moneyText.text = GameDataManager.Instance.totalMoney.ToString();

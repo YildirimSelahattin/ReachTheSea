@@ -25,7 +25,8 @@ public class BallonBullet : MonoBehaviour
         {
             Instantiate(boomEffect, new Vector3(target.transform.position.x,13, target.transform.position.z), boomEffect.transform.rotation);
             GameObject effectIns = Instantiate(impactEffect, target.transform.position,impactEffect.transform.rotation);
-            Destroy(gameObject,0.2f);
+            gameObject.GetComponent<MeshRenderer>().enabled = false;
+            Destroy(gameObject,0.6f);
             foreach (Transform child in target.transform)
             {
                 PeopleManager script = child.gameObject.GetComponent<PeopleManager>();

@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI totalWaveText;
     public GameObject moneyParticle;
     public static UIManager Instance;
+    public GameObject SafeArea;
     void Start()
     {
         if(Instance == null)

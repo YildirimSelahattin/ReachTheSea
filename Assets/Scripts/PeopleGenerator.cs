@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PeopleGenerator : MonoBehaviour
 {
@@ -42,7 +43,9 @@ public class PeopleGenerator : MonoBehaviour
             UIManager.Instance.waveText.text = waveNumber.ToString();
             if (waveNumber == GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].waveNumber + 1)
             {
-                //
+                GameDataManager.Instance.currentLevel++;
+                GameDataManager.Instance.SaveData();
+                SceneManager.LoadScene(0);
             }
             int kisi = (int)(GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].howManyPeopleToGenerate * (waveNumber / (GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].waveNumber * (GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].waveNumber + 1) / 2)));
             Debug.Log(kisi + "kisi");

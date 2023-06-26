@@ -176,6 +176,10 @@ MonoBehaviour:
   getHitEffect: {fileID: 7134145515674617726}
   deathEffect: {fileID: 4432167523192974477, guid: 4aab66bcd4aa3874db542e7647f7da15,
     type: 3}
+  impactEffect: {fileID: 1687118924408352, guid: 77c69ec12208c4c4380d15e30b6f8f68,
+    type: 3}
+  coinPrefab: {fileID: 5830449516115029292, guid: 7a69d08da94a7fb41b516bbf71480266,
+    type: 3}
 --- !u!65 &2262670784060495073
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -348,8 +352,18 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 276323767926232558, guid: 7570da55f605703409a9be4abdd38ffb,
         type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 276323767926232558, guid: 7570da55f605703409a9be4abdd38ffb,
+        type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.7
+      value: 0.936
+      objectReference: {fileID: 0}
+    - target: {fileID: 418733707978166781, guid: 7570da55f605703409a9be4abdd38ffb,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1513302643816135545, guid: 7570da55f605703409a9be4abdd38ffb,
         type: 3}

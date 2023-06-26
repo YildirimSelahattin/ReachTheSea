@@ -10,7 +10,7 @@
    {
         "howManyPeopleToGenerate":55,
         "waveNumber":10,
-        "startMoney":200
+        "startMoney":300
     }
   ]
 }

@@ -70,6 +70,10 @@ MonoBehaviour:
   getHitEffect: {fileID: 3890082321579078905}
   deathEffect: {fileID: 4432167523192974477, guid: 4aab66bcd4aa3874db542e7647f7da15,
     type: 3}
+  impactEffect: {fileID: 1687118924408352, guid: 77c69ec12208c4c4380d15e30b6f8f68,
+    type: 3}
+  coinPrefab: {fileID: 5830449516115029292, guid: 7a69d08da94a7fb41b516bbf71480266,
+    type: 3}
 --- !u!54 &1376275399943533948
 Rigidbody:
   m_ObjectHideFlags: 0
