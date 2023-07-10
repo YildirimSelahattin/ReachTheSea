@@ -100,6 +100,11 @@ public class HatTurretManager : MonoBehaviour
         GameObject bulletGO = Instantiate(bulletPreFab, firePoint.position, firePoint.rotation);
         hatBullet bullet = bulletGO.GetComponent<hatBullet>();
         particleEffect.SetActive(true);
+        GameObject sound = new GameObject("sound");
+        sound.AddComponent<AudioSource>();
+        sound.GetComponent<AudioSource>().volume = 1;
+        sound.GetComponent<AudioSource>().PlayOneShot(GameDataManager.Instance.boomEffect);
+        Destroy(sound, GameDataManager.Instance.boomEffect.length); // Creates new object, add to it audio source, play sound, destroy this object after playing is done
         if (bullet != null)
         {
             bullet.Seek(target, hatEffectPower);

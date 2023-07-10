@@ -29,7 +29,7 @@ public class Turret : MonoBehaviour
     public int upgradePrice;
     public int deletePrice;
     public List<GameObject> starList;
-    public int machineLevel=1;
+    public int machineLevel = 1;
     // Start is called before the first frame update
     void Start()
     {
@@ -99,6 +99,13 @@ public class Turret : MonoBehaviour
                 });
                 if (target != null)
                 {
+
+                    GameObject sound = new GameObject("sound");
+                    sound.AddComponent<AudioSource>();
+                    sound.GetComponent<AudioSource>().volume = 1;
+                    sound.GetComponent<AudioSource>().PlayOneShot(GameDataManager.Instance.creamEffect);
+                    Destroy(sound, GameDataManager.Instance.creamEffect.length); // Creates new object, add to it audio source, play sound, destroy this object after playing is done
+
                     GameObject bulletGO = Instantiate(bulletPreFab, firePoint.position, firePoint.rotation);
                     Bullet bullet = bulletGO.GetComponent<Bullet>();
 
@@ -109,7 +116,7 @@ public class Turret : MonoBehaviour
                 }
             });
         });
-        
+
     }
     void OnDrawGizmosSelected()
     {
@@ -132,11 +139,11 @@ public class Turret : MonoBehaviour
             {
                 //BURADA BÝR PARTÝCLE EFFECT GEREKLÝ
             });
-            
+
             upgradePrice = (int)(upgradePrice * 1.5f);
             deletePrice = (int)(deletePrice * 1.5f);
         }
-       
+
     }
     public void Sell()
     {

@@ -64,6 +64,7 @@ MonoBehaviour:
   explosionRadius: 0
   impactEffect: {fileID: 100000, guid: 16177ac37e9c46e43af8f8945ceefba0, type: 3}
   _coolEffectPower: 0
+  model: {fileID: 4302676108767371376}
 --- !u!96 &3495791973963404305
 TrailRenderer:
   serializedVersion: 2

@@ -13,6 +13,11 @@ public class GameDataManager : MonoBehaviour
     public float catapultPrice;
     public float hatMachinePrice;
     public float sunScreenPrice;
+    public AudioClip splashEffect;
+    public AudioClip boomEffect;
+    public AudioClip deathEffect;
+    public AudioClip creamEffect;
+
     // Start is called before the first frame update
 
     void Awake()

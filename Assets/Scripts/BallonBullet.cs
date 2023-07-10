@@ -27,6 +27,11 @@ public class BallonBullet : MonoBehaviour
             GameObject effectIns = Instantiate(impactEffect, target.transform.position,impactEffect.transform.rotation);
             gameObject.GetComponent<MeshRenderer>().enabled = false;
             Destroy(gameObject,0.6f);
+            GameObject sound = new GameObject("sound");
+            sound.AddComponent<AudioSource>();
+            sound.GetComponent<AudioSource>().volume = 1;
+            sound.GetComponent<AudioSource>().PlayOneShot(GameDataManager.Instance.splashEffect);
+            Destroy(sound, GameDataManager.Instance.splashEffect.length); // Creates new object, add to it audio source, play sound, destroy this object after playing is done
             foreach (Transform child in target.transform)
             {
                 PeopleManager script = child.gameObject.GetComponent<PeopleManager>();

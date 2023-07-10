@@ -45,7 +45,6 @@ public class PeopleGenerator : MonoBehaviour
             {
                 
                   int kisi = (int)(GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].howManyPeopleToGenerate * (waveNumber / (GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].waveNumber * (GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].waveNumber + 1) / 2)));
-                   Debug.Log(kisi + "kisi");
                    StartCoroutine(Generate(0, timer, kisi));
             }
          

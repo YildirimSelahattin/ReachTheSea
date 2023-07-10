@@ -36,7 +36,6 @@ public class PeopleManager : MonoBehaviour
     public GameObject deathEffect;
     public GameObject impactEffect;
     public GameObject coinPrefab;
-    float termometerRedRatio;
 
     void Start()
     {
@@ -91,10 +90,9 @@ public class PeopleManager : MonoBehaviour
         if (maxhealth != curHealth && curHealth > 0)
         {
             float redRatio = (maxhealth - curHealth) / maxhealth;
-            termometerRedRatio = (maxhealth - curHealth) / maxhealth;
             character.transform.GetComponent<MeshRenderer>().materials[0].DOKill();
             character.transform.GetComponent<MeshRenderer>().materials[0].DOVector(new Vector4(240f / 255f, (213 - 213 * redRatio) / 255f, (208 - 208 * redRatio) / 255f, 1), "_BaseColor", 0.1f);
-            healthBar.fillAmount = termometerRedRatio;
+            healthBar.fillAmount = redRatio;
         }
         transform.DOLocalMove(new Vector3(0, 0, 0.0017f), speed).SetSpeedBased().SetEase(Ease.Linear).OnComplete(() =>
         {
@@ -114,6 +112,11 @@ public class PeopleManager : MonoBehaviour
             }
             if (curHealth <= 0)
             {
+                GameObject sound = new GameObject("sound");
+                sound.AddComponent<AudioSource>();
+                sound.GetComponent<AudioSource>().volume = 1;
+                sound.GetComponent<AudioSource>().PlayOneShot(GameDataManager.Instance.deathEffect);
+                Destroy(sound, GameDataManager.Instance.deathEffect.length); // Creates new object, add to it audio source, play sound, destroy this object after playing is done
                 Debug.Log("sa");
                 Instantiate(deathEffect, transform.position + Vector3.up, deathEffect.transform.rotation);
                 GameManager.Instance.currentBurnedPeople++;
@@ -176,8 +179,8 @@ public class PeopleManager : MonoBehaviour
         character.transform.GetComponent<MeshRenderer>().materials[0].DOKill();
         character.transform.GetComponent<MeshRenderer>().materials[0].DOVector(new Vector4(240f / 255f, (213 - 213 * redRatio) / 255f, (208 - 208 * redRatio) / 255f, 1), "_BaseColor", 0.1f);
         healthBar.transform.DOKill();
-        termometerRedRatio = (maxhealth - curHealth) / maxhealth;
-        healthBar.fillAmount = termometerRedRatio;
+        Debug.Log("redd"+redRatio);
+        healthBar.fillAmount = redRatio;
 
     }
 }
