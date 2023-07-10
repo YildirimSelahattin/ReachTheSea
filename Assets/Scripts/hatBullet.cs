@@ -23,10 +23,20 @@ public class hatBullet : MonoBehaviour
         transform.DOLocalRotate(new Vector3(-90,0,0),0.5f);
         transform.DOLocalMove(new Vector3(0, 1, 0), speed).OnComplete(() =>
         {
-            //GameObject effectIns = Instantiate(impactEffect, transform.position, transform.rotation);
-            target.gameObject.GetComponent<PeopleManager>().umbrellaObject.Add(gameObject);
-            Debug.Log("name"+target.name);
-            target.gameObject.GetComponent<PeopleManager>().isUnderUmbrella = hatEffectPower;
+            if(target.gameObject.GetComponent<PeopleManager>().umbrellaObject.Count != 0)
+            {
+                target.gameObject.GetComponent<PeopleManager>().isUnderUmbrella += 1;
+                Destroy(this.gameObject,0.1f);
+
+            }
+            else
+            {
+                //GameObject effectIns = Instantiate(impactEffect, transform.position, transform.rotation);
+                target.gameObject.GetComponent<PeopleManager>().umbrellaObject.Add(gameObject);
+                Debug.Log("name" + target.name);
+                target.gameObject.GetComponent<PeopleManager>().isUnderUmbrella = hatEffectPower;
+            }
+        
         });
 
     }

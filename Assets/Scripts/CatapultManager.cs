@@ -16,6 +16,7 @@ public class CatapultManager : MonoBehaviour
     public float range = 15f;
     public int price;
     public int upgradePrice;
+    public int deletePrice;
     [Header("Unity Setup Fields")]
 
     public Transform partToRotate;
@@ -26,11 +27,16 @@ public class CatapultManager : MonoBehaviour
     public bool isInAnimation = false;
     public GameObject bulletGo;
     public int coolEffectPower;
+    public List<GameObject> starList;
+    public int machineLevel = 1;
     // Start is called before the first frame update
     void Start()
     {
         Debug.Log("wer");
         InvokeRepeating("UpdateTarget", 0f, 0.2f);
+        upgradePrice = (int)(price * 1.5f);
+        deletePrice = price / 2;
+        OpenStars(1);
     }
 
     void UpdateTarget()
@@ -53,6 +59,9 @@ public class CatapultManager : MonoBehaviour
         }
         else
         {
+            fireArm.transform.DOLocalRotate(new Vector3(-90, -90, -90), 0.1f);
+            catapultArm.transform.DOLocalRotate(new Vector3(0, -20, 0), 0.1f);
+            isInAnimation = false;
             target = null;
         }
     }
@@ -114,13 +123,19 @@ public class CatapultManager : MonoBehaviour
     {
         if (GameDataManager.Instance.totalMoney > upgradePrice)
         {
+            transform.parent.gameObject.GetComponent<MachineSpotManager>().ResetAndClose();
             coolEffectPower *= 2;
             upgradePrice *= 2;
-            transform.DOScale(transform.localScale * 1.2f, 1f).OnComplete(() =>
+            range += 1;
+            machineLevel++;
+            OpenStars(machineLevel);
+            transform.DOScale(transform.localScale * 1.1f, 1f).OnComplete(() =>
             {
                 //BURADA BÝR PARTÝCLE EFFECT GEREKLÝ
             });
             GameDataManager.Instance.totalMoney -= upgradePrice;
+            upgradePrice = (int)(upgradePrice * 1.5f);
+            deletePrice = (int)(deletePrice * 1.5f);
             UIManager.Instance.moneyText.text = GameDataManager.Instance.totalMoney.ToString();
         }
 
@@ -130,9 +145,31 @@ public class CatapultManager : MonoBehaviour
         Debug.Log("SUNSCREEN");
         GameDataManager.Instance.totalMoney -= price / 2;
         UIManager.Instance.moneyText.text = GameDataManager.Instance.totalMoney.ToString();
-        transform.DOShakeRotation(1, 50, 3, 50).OnComplete(() =>
+        transform.DOScale(Vector3.one * 0.2f, 1).OnComplete(() =>
         {
             Destroy(this.gameObject);
         });
+    }
+    public void OpenStars(int level)
+    {
+        foreach (GameObject star in starList)
+        {
+            star.SetActive(false);
+        }
+        if (level == 1)
+        {
+            starList[1].SetActive(true);
+        }
+        else if (level == 2)
+        {
+            starList[0].SetActive(true);
+            starList[2].SetActive(true);
+        }
+        else if (level == 3)
+        {
+            starList[0].SetActive(true);
+            starList[1].SetActive(true);
+            starList[2].SetActive(true);
+        }
     }
 }

@@ -40,9 +40,10 @@ public class MachineSpotManager : MonoBehaviour
     }
     public void SunscreenPreviewButtonPressed()
     {
-        if (GameDataManager.Instance.totalMoney > GameDataManager.Instance.sunScreenPrice)
+        if (GameDataManager.Instance.totalMoney >= GameDataManager.Instance.sunScreenPrice)
         {
             GameDataManager.Instance.totalMoney -= (int)GameDataManager.Instance.sunScreenPrice;
+            UIManager.Instance.moneyText.text = GameDataManager.Instance.totalMoney.ToString();
             MachineGenerator.Instance.CreateSunscreenMachine(transform);
             machinePrefabName = "sunscreen";
             haveMachineOnIt = true;
@@ -58,9 +59,10 @@ public class MachineSpotManager : MonoBehaviour
 
     public void HatPreviewButtonPressed()
     {
-        if (GameDataManager.Instance.totalMoney > GameDataManager.Instance.hatMachinePrice)
+        if (GameDataManager.Instance.totalMoney >= GameDataManager.Instance.hatMachinePrice)
         {
             GameDataManager.Instance.totalMoney -= (int)GameDataManager.Instance.hatMachinePrice;
+            UIManager.Instance.moneyText.text = GameDataManager.Instance.totalMoney.ToString();
             currentMachineOnIt = MachineGenerator.Instance.CreateSunHatMachine(transform);
             haveMachineOnIt = true;
             machinePrefabName = "hat";
@@ -76,9 +78,10 @@ public class MachineSpotManager : MonoBehaviour
     }
     public void CatapultPreviewButtonPressed()
     {
-        if (GameDataManager.Instance.totalMoney > GameDataManager.Instance.catapultPrice)
+        if (GameDataManager.Instance.totalMoney >= GameDataManager.Instance.catapultPrice)
         {
             GameDataManager.Instance.totalMoney -= (int)GameDataManager.Instance.catapultPrice;
+            UIManager.Instance.moneyText.text = GameDataManager.Instance.totalMoney.ToString();
             currentMachineOnIt = MachineGenerator.Instance.CreateCatapultMachine(transform);
             haveMachineOnIt = true;
             machinePrefabName = "catapult";
@@ -96,6 +99,9 @@ public class MachineSpotManager : MonoBehaviour
     {
         buttonLayout.transform.DOScale(Vector3.zero, 0.5f).OnComplete(() =>
         {
+            hatPreviewButton.GetComponent<SpriteRenderer>().color = Color.white;
+            catapultPreviewButton.GetComponent<SpriteRenderer>().color = Color.white;
+            sunscreenPreviewButton.GetComponent<SpriteRenderer>().color = Color.white;
             sunscreenPreviewButton.SetActive(true);
             catapultPreviewButton.SetActive(true);
             hatPreviewButton.SetActive(true);
@@ -113,7 +119,33 @@ public class MachineSpotManager : MonoBehaviour
         }
         else
         {
-
+            switch (machinePrefabName)
+            {
+                case "sunScreen":
+                    upgradeMachinePriceText.text =  currentMachineOnIt.GetComponent<Turret>().upgradePrice.ToString();
+                    if(GameDataManager.Instance.totalMoney< currentMachineOnIt.GetComponent<Turret>().upgradePrice)
+                    {
+                        upgradeMachinePriceText.transform.parent.gameObject.GetComponent<SpriteRenderer>().color = Color.gray;
+                    }
+                    deleteMachinePriceText.text = currentMachineOnIt.GetComponent<Turret>().deletePrice.ToString();
+                    break;
+                case "hat":
+                    upgradeMachinePriceText.text =currentMachineOnIt.GetComponent<HatTurretManager>().upgradePrice.ToString();
+                    if (GameDataManager.Instance.totalMoney < currentMachineOnIt.GetComponent<HatTurretManager>().upgradePrice)
+                    {
+                        upgradeMachinePriceText.transform.parent.gameObject.GetComponent<SpriteRenderer>().color = Color.gray;
+                    }
+                    deleteMachinePriceText.text = currentMachineOnIt.GetComponent<HatTurretManager>().deletePrice.ToString();
+                    break;
+                case "catapult":
+                    upgradeMachinePriceText.text =currentMachineOnIt.GetComponent<CatapultManager>().upgradePrice.ToString();
+                    if (GameDataManager.Instance.totalMoney < currentMachineOnIt.GetComponent<CatapultManager>().upgradePrice)
+                    {
+                        upgradeMachinePriceText.transform.parent.gameObject.GetComponent<SpriteRenderer>().color = Color.gray;
+                    }
+                    deleteMachinePriceText.text = currentMachineOnIt.GetComponent<CatapultManager>().deletePrice.ToString();
+                    break;
+            }
             upgradeButtonLayout.SetActive(true);
         }
     }
@@ -122,29 +154,25 @@ public class MachineSpotManager : MonoBehaviour
         buttonLayout.transform.localScale = Vector3.zero;
         buttonLayout.transform.DOScale(Vector3.one,0.5f);
         buttonLayout.SetActive(true);
-        if (GameDataManager.Instance.totalMoney > GameDataManager.Instance.sunScreenPrice)
+        if (GameDataManager.Instance.totalMoney < GameDataManager.Instance.sunScreenPrice)
         {
-
+            sunscreenPreviewButton.GetComponent<SpriteRenderer>().color = Color.gray;
         }
         else
         {
 
         }
-        if (GameDataManager.Instance.totalMoney > GameDataManager.Instance.catapultPrice)
+        if (GameDataManager.Instance.totalMoney < GameDataManager.Instance.catapultPrice)
         {
-
+            catapultPreviewButton.GetComponent<SpriteRenderer>().color = Color.gray;
         }
         else
         {
 
         }
-        if (GameDataManager.Instance.totalMoney > GameDataManager.Instance.sunScreenPrice)
+        if (GameDataManager.Instance.totalMoney < GameDataManager.Instance.hatMachinePrice)
         {
-
-        }
-        else
-        {
-
+            hatPreviewButton.GetComponent<SpriteRenderer>().color = Color.gray;
         }
     }
     public void SellMachine()
@@ -163,6 +191,7 @@ public class MachineSpotManager : MonoBehaviour
         }
         machinePrefabName = string.Empty;
         currentMachineOnIt = null;
+        haveMachineOnIt = false;
         ResetAndClose();
     }
 

@@ -29,7 +29,7 @@ public class Bullet : MonoBehaviour
             {
                 target.gameObject.GetComponent<PeopleManager>().CoolOf(_coolEffectPower);
             }
-            Destroy(this.gameObject);
+            Destroy(this.gameObject,0.1f);
         });
 
     }

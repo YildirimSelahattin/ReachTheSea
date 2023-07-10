@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Unity.VisualScripting;
+using Unity.VisualScripting.Antlr3.Runtime.Collections;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 public class HatTurretManager : MonoBehaviour
 {
@@ -17,6 +17,7 @@ public class HatTurretManager : MonoBehaviour
     public float fireRate = 1f;
     private float fireCountdown = 0f;
     public float range = 15f;
+    public List<GameObject> starList;
 
     [Header("Unity Setup Fields")]
 
@@ -27,17 +28,23 @@ public class HatTurretManager : MonoBehaviour
     public Transform firePoint;
     int stageKeyIndex;
     float maxKeyValue = 15;
-    float tweenDuration = 0.3f;
+    float tweenDuration = 0.2f;
     public int price;
     public int upgradePrice;
+    public int deletePrice;
     public bool isInShootAnimation = false;
     public float[] tweeningKeyVariables = new float[7];
     public int hatEffectPower;
+    public GameObject upgradeEffect;
+    public int machineLevel=1;
     // Start is called before the first frame update
     void Start()
     {
 
         InvokeRepeating("UpdateTarget", 0f, 0.4f);
+        upgradePrice = (int)(price * 1.5f);
+        deletePrice = price / 2;
+        OpenStars(1);
     }
 
     void UpdateTarget()
@@ -139,27 +146,58 @@ public class HatTurretManager : MonoBehaviour
     }
     public void Upgrade()
     {
-        if (GameDataManager.Instance.totalMoney > upgradePrice)
+        if (GameDataManager.Instance.totalMoney >= upgradePrice)
         {
+            transform.parent.gameObject.GetComponent<MachineSpotManager>().ResetAndClose();
+            Debug.Log("buyut");
+            machineLevel++;
+            OpenStars(machineLevel);
             hatEffectPower *= 2/3;
             upgradePrice *= 2;
-            transform.DOScale(transform.localScale * 1.2f, 1f).OnComplete(() =>
+            upgradeEffect.SetActive(true);
+            range += 1;
+            transform.DOScale(transform.localScale * 1.1f, 1f).OnComplete(() =>
             {
                 //BURADA BÝR PARTÝCLE EFFECT GEREKLÝ
             });
             GameDataManager.Instance.totalMoney -= upgradePrice;
+            upgradePrice = (int)(upgradePrice * 1.5f);
+            deletePrice =(int)( deletePrice * 1.5f);
             UIManager.Instance.moneyText.text = GameDataManager.Instance.totalMoney.ToString();
         }
 
     }
     public void Sell()
     {
-        Debug.Log("SUNSCREEN");
+        Debug.Log("Hat");
         GameDataManager.Instance.totalMoney -= price / 2;
         UIManager.Instance.moneyText.text = GameDataManager.Instance.totalMoney.ToString();
-        transform.DOShakeRotation(1, 50, 3, 50).OnComplete(() =>
+        transform.DOScale(Vector3.one*0.2f,1).OnComplete(() =>
         {
             Destroy(this.gameObject);
         });
+    }
+
+    public void OpenStars(int level)
+    {
+        foreach (GameObject star in starList)
+        {
+            star.SetActive(false);
+        }
+        if(level == 1)
+        {
+            starList[1].SetActive(true);
+        }
+        else if (level == 2)
+        {
+            starList[0].SetActive(true);
+            starList[2].SetActive(true);
+        }
+        else if (level == 3)
+        {
+            starList[0].SetActive(true);
+            starList[1].SetActive(true);
+            starList[2].SetActive(true);
+        }
     }
 }

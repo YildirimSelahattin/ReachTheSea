@@ -22,11 +22,13 @@ public class AmbulanceManager : MonoBehaviour
         pos.y += 0.5f;
         transform.DOMove(pos, 2f).OnComplete(() =>
         {
+            people.transform.parent = transform;
             Vector3 temp = transform.position;
             temp.y +=1.68f;
-            people.transform.DOJump(temp, 4, 1, 0.5f).OnComplete(() =>
+
+            people.transform.DOLocalRotate(new Vector3(73, 161, 69), 0.5f);
+            people.transform.DOLocalMove(new Vector3(-0.013f, -0.0013f, 0.016f), 0.5f).OnComplete(() =>
             {
-                people.transform.parent = transform;
                 transform.DOLocalMove(new Vector3(0,0,0),2f).OnComplete(()=>Destroy(this.gameObject));
             });
         });

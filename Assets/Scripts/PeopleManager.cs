@@ -1,12 +1,15 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
+using UnityEngine.SceneManagement;
 
 public class PeopleManager : MonoBehaviour
 {
     // Start is called before the first frame update
-    float speed = 0.01f;
+    public float speed = 0.01f;
     public float maxhealth;
     public float curHealth;
     public float healthDecreaseAmount;
@@ -24,15 +27,17 @@ public class PeopleManager : MonoBehaviour
     public int peopleIndex;
     public int isUnderUmbrella = 0;
     public List<GameObject> umbrellaObject;
-    public float reachMoney = 10;
+    public float reachMoney;
     public GameObject healEffect;
     public Material skinMat;
+    public GameObject healthBar;
+    public GameObject getHitEffect;
+    public GameObject deathEffect;
+    public GameObject impactEffect;
+    public GameObject coinPrefab;
     void Start()
     {
-        curHealth = maxhealth;
-        originalSkinColor = character.GetComponent<MeshRenderer>().materials[0].GetColor("_BaseColor") ;
-
-
+ 
     }
 
     // Update is called once per frame
@@ -42,6 +47,8 @@ public class PeopleManager : MonoBehaviour
     }
     public void MoveStart()
     {
+        curHealth = maxhealth;
+        originalSkinColor = character.GetComponent<MeshRenderer>().materials[0].GetColor("_BaseColor");
         ChangeRotation(0);
         transform.parent = LevelSpawner.Instance.currentLevelScript.roadObjectList[0].transform;
         transform.DOLocalMove(Vector3.zero, 1f).OnComplete(() =>
@@ -58,12 +65,22 @@ public class PeopleManager : MonoBehaviour
             transform.parent = LevelSpawner.Instance.currentLevelScript.seaJumpingPos.transform;
             transform.DOLocalJump(new Vector3(Random.Range(-offsetRange, offsetRange), 0, 0), 3, 1, 1f).OnComplete(() =>
             {
+                GameObject effectIns = Instantiate(impactEffect, transform.position, impactEffect.transform.rotation);
+                GameObject coinPrefab_ = Instantiate(coinPrefab, UIManager.Instance.SafeArea.transform);
+                coinPrefab_.GetComponent<CoinEffect>().MoveCoins(UIManager.Instance.moneyText.transform.parent);
                 gameObject.SetActive(false);
-                GameManager.Instance.currentMoney += 50;
                 GameDataManager.Instance.totalMoney += (int)reachMoney;
+                UIManager.Instance.moneyText.text = GameDataManager.Instance.totalMoney.ToString();
+                UIManager.Instance.moneyParticle.SetActive(true);
                 GameManager.Instance.currentReachedPeople++;
                 UIManager.Instance.swimmingPeopleText.text = GameManager.Instance.currentReachedPeople.ToString();
-                UIManager.Instance.moneyParticle.SetActive(true);
+                if (PeopleGenerator.Instance.peopleObjectList.Count ==0)
+                {
+                    GameDataManager.Instance.currentLevel++;
+                    GameDataManager.Instance.SaveData();
+                    SceneManager.LoadScene(0);
+                }
+                PeopleGenerator.Instance.peopleObjectList.Remove(gameObject);
             });
             return;
         }
@@ -71,15 +88,17 @@ public class PeopleManager : MonoBehaviour
         if (maxhealth != curHealth && curHealth > 0)
         {
             float redRatio = (maxhealth - curHealth) / maxhealth;
+            //float termometerRedRatio = (maxhealth - curHealth+1) / maxhealth;
             character.transform.GetComponent<MeshRenderer>().materials[0].DOKill();
-            character.transform.GetComponent<MeshRenderer>().materials[0].DOVector(new Vector4(240f/255f, (213 - 213 * redRatio)/255f, (208 - 208 * redRatio)/255f, 1), "_BaseColor", 0.1f);
+            character.transform.GetComponent<MeshRenderer>().materials[0].DOVector(new Vector4(240f / 255f, (213 - 213 * redRatio) / 255f, (208 - 208 * redRatio) / 255f, 1), "_BaseColor", 0.1f);
+            healthBar.transform.DOScaleY(redRatio * 1.8f, 0.5f);
         }
-        transform.DOLocalMove(new Vector3(0, 0, 0), speed).SetSpeedBased().SetEase(Ease.Linear).OnComplete(() =>
+        transform.DOLocalMove(new Vector3(0, 0, 0.0017f), speed).SetSpeedBased().SetEase(Ease.Linear).OnComplete(() =>
         {
             if (isUnderUmbrella > 0)
             {
                 isUnderUmbrella -= 1;
-                if(isUnderUmbrella == 0)
+                if (isUnderUmbrella == 0)
                 {
                     umbrellaObject[0].GetComponent<hatBullet>().FallOf();
                     umbrellaObject.RemoveAt(0);
@@ -88,21 +107,33 @@ public class PeopleManager : MonoBehaviour
             else
             {
                 curHealth -= healthDecreaseAmount;
+                //getHitEffect.SetActive(true);
             }
-            if (curHealth == 0)
+            if (curHealth <= 0)
             {
+                Debug.Log("sa");
+                Instantiate(deathEffect, transform.position + Vector3.up, deathEffect.transform.rotation);
                 GameManager.Instance.currentBurnedPeople++;
+                healthBar.transform.parent.gameObject.SetActive(false);
                 UIManager.Instance.burnedPeopleText.text = GameManager.Instance.currentBurnedPeople.ToString();
                 modelParent.transform.DOKill();
                 transform.DOKill();
-                transform.DOLocalRotate(new Vector3(0, 0, 90), 0.5f);
-                transform.DOScale(new Vector3(0.007f, 0.007f, 0.003f), 0.5f);
-                transform.DOLocalMove(new Vector3(0.001F, 0.0001F,0.003f), 0.5f).OnComplete(() =>
+                transform.parent = null;
+                transform.DOLocalRotate(new Vector3(0, 0, -90), 0.5f).OnComplete(() =>
                 {
                     AmbulanceGenerator.Instance.CreateAmbulance(gameObject);
                 });
+                transform.DOMoveY(13, 0.5f);
+                if (PeopleGenerator.Instance.peopleObjectList.Count == 0)
+                {
+                    GameDataManager.Instance.currentLevel++;
+                    GameDataManager.Instance.SaveData();
+                    SceneManager.LoadScene(0);
+                }
                 PeopleGenerator.Instance.peopleObjectList.Remove(gameObject);
+               
                 return;
+                
             }
             if (curHealth == 1)
             {
@@ -124,24 +155,25 @@ public class PeopleManager : MonoBehaviour
 
     public void MoveShake()
     {
-        modelParent.transform.DOLocalRotate(new Vector3(0, 0, -5.5f), curHealth / maxhealth).OnComplete(() =>
+        /*modelParent.transform.DOLocalRotate(new Vector3(0, 0, -5.5f), curHealth / maxhealth).OnComplete(() =>
         {
             modelParent.transform.DOLocalRotate(new Vector3(0, 0, 5.5f), curHealth / maxhealth).OnComplete(() => MoveShake());
-        });
+        });*/
     }
     public void CoolOf(int healthIncrease)
     {
-        if (curHealth < maxhealth)
+
+        curHealth += healthIncrease;
+        if (curHealth > maxhealth)
         {
-            curHealth+= healthIncrease;
-            float redRatio = (maxhealth - curHealth) / maxhealth;
-            healEffect.SetActive(true);
-            character.transform.GetComponent<MeshRenderer>().materials[0].DOKill();
-            character.transform.GetComponent<MeshRenderer>().materials[0].DOVector(new Vector4(240f / 255f, (213 - 213 * redRatio) / 255f, (208 - 208 * redRatio) / 255f, 1), "_BaseColor", 0.1f);
+            curHealth = maxhealth;
         }
-        else
-        {
-            Debug.Log("blablalbal");
-        }
+        float redRatio = (maxhealth - curHealth) / maxhealth;
+        healEffect.SetActive(true);
+        character.transform.GetComponent<MeshRenderer>().materials[0].DOKill();
+        character.transform.GetComponent<MeshRenderer>().materials[0].DOVector(new Vector4(240f / 255f, (213 - 213 * redRatio) / 255f, (208 - 208 * redRatio) / 255f, 1), "_BaseColor", 0.1f);
+        healthBar.transform.DOKill();
+        healthBar.transform.DOScaleY(redRatio * 1.8f, 0.1f);
+
     }
 }
