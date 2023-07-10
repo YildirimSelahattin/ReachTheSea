@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.UI;
 using static UnityEngine.GraphicsBuffer;
 using UnityEngine.SceneManagement;
 
@@ -30,11 +31,13 @@ public class PeopleManager : MonoBehaviour
     public float reachMoney;
     public GameObject healEffect;
     public Material skinMat;
-    public GameObject healthBar;
+    public Image healthBar;
     public GameObject getHitEffect;
     public GameObject deathEffect;
     public GameObject impactEffect;
     public GameObject coinPrefab;
+    float termometerRedRatio;
+
     void Start()
     {
  
@@ -88,10 +91,10 @@ public class PeopleManager : MonoBehaviour
         if (maxhealth != curHealth && curHealth > 0)
         {
             float redRatio = (maxhealth - curHealth) / maxhealth;
-            //float termometerRedRatio = (maxhealth - curHealth+1) / maxhealth;
+            termometerRedRatio = (maxhealth - curHealth) / maxhealth;
             character.transform.GetComponent<MeshRenderer>().materials[0].DOKill();
             character.transform.GetComponent<MeshRenderer>().materials[0].DOVector(new Vector4(240f / 255f, (213 - 213 * redRatio) / 255f, (208 - 208 * redRatio) / 255f, 1), "_BaseColor", 0.1f);
-            healthBar.transform.DOScaleY(redRatio * 1.8f, 0.5f);
+            healthBar.fillAmount = termometerRedRatio;
         }
         transform.DOLocalMove(new Vector3(0, 0, 0.0017f), speed).SetSpeedBased().SetEase(Ease.Linear).OnComplete(() =>
         {
@@ -173,7 +176,8 @@ public class PeopleManager : MonoBehaviour
         character.transform.GetComponent<MeshRenderer>().materials[0].DOKill();
         character.transform.GetComponent<MeshRenderer>().materials[0].DOVector(new Vector4(240f / 255f, (213 - 213 * redRatio) / 255f, (208 - 208 * redRatio) / 255f, 1), "_BaseColor", 0.1f);
         healthBar.transform.DOKill();
-        healthBar.transform.DOScaleY(redRatio * 1.8f, 0.1f);
+        termometerRedRatio = (maxhealth - curHealth) / maxhealth;
+        healthBar.fillAmount = termometerRedRatio;
 
     }
 }

@@ -66,7 +66,7 @@ MonoBehaviour:
   reachMoney: 50
   healEffect: {fileID: 1649258830622450880}
   skinMat: {fileID: 0}
-  healthBar: {fileID: 4679883034036511148}
+  healthBar: {fileID: 2119646016510666861}
   getHitEffect: {fileID: 3890082321579078905}
   deathEffect: {fileID: 4432167523192974477, guid: 4aab66bcd4aa3874db542e7647f7da15,
     type: 3}
@@ -569,12 +569,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7570da55f605703409a9be4abdd38ffb, type: 3}
---- !u!1 &4679883034036511148 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1444021812575483211, guid: 7570da55f605703409a9be4abdd38ffb,
+--- !u!114 &2119646016510666861 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5301304321207778442, guid: 7570da55f605703409a9be4abdd38ffb,
     type: 3}
   m_PrefabInstance: {fileID: 6122778809195664615}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &5690442811266135616 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1873771727844336295, guid: 7570da55f605703409a9be4abdd38ffb,
