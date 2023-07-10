@@ -153,7 +153,6 @@ public class HatTurretManager : MonoBehaviour
             machineLevel++;
             OpenStars(machineLevel);
             hatEffectPower *= 2/3;
-            upgradePrice *= 2;
             upgradeEffect.SetActive(true);
             range += 1;
             transform.DOScale(transform.localScale * 1.1f, 1f).OnComplete(() =>
@@ -170,8 +169,9 @@ public class HatTurretManager : MonoBehaviour
     public void Sell()
     {
         Debug.Log("Hat");
-        GameDataManager.Instance.totalMoney -= price / 2;
+        GameDataManager.Instance.totalMoney += price / 2;
         UIManager.Instance.moneyText.text = GameDataManager.Instance.totalMoney.ToString();
+        UIManager.Instance.moneyParticle.SetActive(true);
         transform.DOScale(Vector3.one*0.2f,1).OnComplete(() =>
         {
             Destroy(this.gameObject);

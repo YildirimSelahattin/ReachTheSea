@@ -4,7 +4,7 @@
    {
         "howManyPeopleToGenerate":60,
         "waveNumber":3,
-         "startMoney":60
+         "startMoney":600
     },
     
    {

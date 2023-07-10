@@ -24,12 +24,13 @@ public class Bullet : MonoBehaviour
         transform.DOLocalJump(new Vector3(0,4,0),1,1, speed).OnComplete(() =>
         {
 
+            Destroy(this.gameObject, 0.2f);
+            gameObject.GetComponent<MeshRenderer>().enabled = false;
             GameObject effectIns = Instantiate(impactEffect, transform.position, impactEffect.transform.rotation);
             if (target != null)
             {
                 target.gameObject.GetComponent<PeopleManager>().CoolOf(_coolEffectPower);
             }
-            Destroy(this.gameObject,0.1f);
         });
 
     }

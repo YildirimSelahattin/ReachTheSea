@@ -1129,7 +1129,7 @@ MonoBehaviour:
   data:
     levelsArray: []
   JSONText: {fileID: 4900000, guid: e8774a8a2f6ee924cb8b7085f9bcf59d, type: 3}
-  currentLevel: 2
+  currentLevel: 1
   playSound: 1
   totalMoney: 60
   catapultPrice: 50

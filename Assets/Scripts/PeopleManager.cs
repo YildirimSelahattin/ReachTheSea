@@ -74,7 +74,7 @@ public class PeopleManager : MonoBehaviour
                 UIManager.Instance.moneyParticle.SetActive(true);
                 GameManager.Instance.currentReachedPeople++;
                 UIManager.Instance.swimmingPeopleText.text = GameManager.Instance.currentReachedPeople.ToString();
-                if (PeopleGenerator.Instance.peopleObjectList.Count ==0)
+                if (PeopleGenerator.Instance.peopleObjectList.Count ==0 && PeopleGenerator.Instance.waveNumber == GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].waveNumber + 1)
                 {
                     GameDataManager.Instance.currentLevel++;
                     GameDataManager.Instance.SaveData();
@@ -124,7 +124,7 @@ public class PeopleManager : MonoBehaviour
                     AmbulanceGenerator.Instance.CreateAmbulance(gameObject);
                 });
                 transform.DOMoveY(13, 0.5f);
-                if (PeopleGenerator.Instance.peopleObjectList.Count == 0)
+                if (PeopleGenerator.Instance.peopleObjectList.Count == 0 && PeopleGenerator.Instance.waveNumber == GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel-1].waveNumber+1)
                 {
                     GameDataManager.Instance.currentLevel++;
                     GameDataManager.Instance.SaveData();

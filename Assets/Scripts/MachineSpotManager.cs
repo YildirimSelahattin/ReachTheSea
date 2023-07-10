@@ -44,7 +44,7 @@ public class MachineSpotManager : MonoBehaviour
         {
             GameDataManager.Instance.totalMoney -= (int)GameDataManager.Instance.sunScreenPrice;
             UIManager.Instance.moneyText.text = GameDataManager.Instance.totalMoney.ToString();
-            MachineGenerator.Instance.CreateSunscreenMachine(transform);
+            currentMachineOnIt = MachineGenerator.Instance.CreateSunscreenMachine(transform);
             machinePrefabName = "sunscreen";
             haveMachineOnIt = true;
             ResetAndClose();
@@ -121,7 +121,7 @@ public class MachineSpotManager : MonoBehaviour
         {
             switch (machinePrefabName)
             {
-                case "sunScreen":
+                case "sunscreen":
                     upgradeMachinePriceText.text =  currentMachineOnIt.GetComponent<Turret>().upgradePrice.ToString();
                     if(GameDataManager.Instance.totalMoney< currentMachineOnIt.GetComponent<Turret>().upgradePrice)
                     {
@@ -179,7 +179,7 @@ public class MachineSpotManager : MonoBehaviour
     {
         switch (machinePrefabName)
         {
-            case "sunScreen":
+            case "sunscreen":
                 currentMachineOnIt.GetComponent<Turret>().Sell();
                 break;
             case "hat":
@@ -199,7 +199,7 @@ public class MachineSpotManager : MonoBehaviour
     {
         switch (machinePrefabName)
         {
-            case "sunScreen":
+            case "sunscreen":
                 currentMachineOnIt.GetComponent<Turret>().Upgrade();
                 break;
             case "hat":

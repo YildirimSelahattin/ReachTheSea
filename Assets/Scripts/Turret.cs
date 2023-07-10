@@ -125,7 +125,6 @@ public class Turret : MonoBehaviour
             UIManager.Instance.moneyText.text = GameDataManager.Instance.totalMoney.ToString();
             transform.parent.gameObject.GetComponent<MachineSpotManager>().ResetAndClose();
             coolEffectPower *= 2;
-            upgradePrice *= 2;
             range += 1;
             machineLevel++;
             OpenStars(machineLevel);
@@ -142,8 +141,9 @@ public class Turret : MonoBehaviour
     public void Sell()
     {
         Debug.Log("SUNSCREEN");
-        GameDataManager.Instance.totalMoney -= price / 2;
+        GameDataManager.Instance.totalMoney += price / 2;
         UIManager.Instance.moneyText.text = GameDataManager.Instance.totalMoney.ToString();
+        UIManager.Instance.moneyParticle.SetActive(true);
         transform.DOScale(Vector3.one * 0.2f, 0.5f).SetEase(Ease.InOutBack).OnComplete(() =>
         {
             Destroy(this.gameObject);
