@@ -39,7 +39,7 @@ public class PeopleManager : MonoBehaviour
 
     void Start()
     {
- 
+
     }
 
     // Update is called once per frame
@@ -76,13 +76,14 @@ public class PeopleManager : MonoBehaviour
                 UIManager.Instance.moneyParticle.SetActive(true);
                 GameManager.Instance.currentReachedPeople++;
                 UIManager.Instance.swimmingPeopleText.text = GameManager.Instance.currentReachedPeople.ToString();
-                if (PeopleGenerator.Instance.peopleObjectList.Count ==0 && PeopleGenerator.Instance.waveNumber == GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].waveNumber + 1)
+                PeopleGenerator.Instance.peopleObjectList.Remove(gameObject);
+                if (PeopleGenerator.Instance.peopleObjectList.Count == 0 && PeopleGenerator.Instance.waveNumber == GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].waveNumber + 1)
                 {
                     GameDataManager.Instance.currentLevel++;
                     GameDataManager.Instance.SaveData();
-                    SceneManager.LoadScene(0);
+                    SceneManager.LoadScene(1);
                 }
-                PeopleGenerator.Instance.peopleObjectList.Remove(gameObject);
+                
             });
             return;
         }
@@ -130,16 +131,16 @@ public class PeopleManager : MonoBehaviour
                     AmbulanceGenerator.Instance.CreateAmbulance(gameObject);
                 });
                 transform.DOMoveY(13, 0.5f);
-                if (PeopleGenerator.Instance.peopleObjectList.Count == 0 && PeopleGenerator.Instance.waveNumber == GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel-1].waveNumber+1)
+                PeopleGenerator.Instance.peopleObjectList.Remove(gameObject);
+                if (PeopleGenerator.Instance.peopleObjectList.Count == 0 && PeopleGenerator.Instance.waveNumber == GameDataManager.Instance.data.levelsArray[GameDataManager.Instance.currentLevel - 1].waveNumber + 1)
                 {
                     GameDataManager.Instance.currentLevel++;
                     GameDataManager.Instance.SaveData();
-                    SceneManager.LoadScene(0);
+                    SceneManager.LoadScene(1);
                 }
-                PeopleGenerator.Instance.peopleObjectList.Remove(gameObject);
-               
+            
                 return;
-                
+
             }
             if (curHealth == 1)
             {
@@ -179,7 +180,7 @@ public class PeopleManager : MonoBehaviour
         character.transform.GetComponent<MeshRenderer>().materials[0].DOKill();
         character.transform.GetComponent<MeshRenderer>().materials[0].DOVector(new Vector4(240f / 255f, (213 - 213 * redRatio) / 255f, (208 - 208 * redRatio) / 255f, 1), "_BaseColor", 0.1f);
         healthBar.transform.DOKill();
-        Debug.Log("redd"+redRatio);
+        Debug.Log("redd" + redRatio);
         healthBar.fillAmount = redRatio;
 
     }

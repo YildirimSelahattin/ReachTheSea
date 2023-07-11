@@ -20,7 +20,7 @@ public class StartSceneScript : MonoBehaviour
 
     public void Start()
     {
-        LoadSceneMenu(1);
+        LoadSceneMenu(2);
     }
 
     public async void LoadSceneMenu(int sceneID)

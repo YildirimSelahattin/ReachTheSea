@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41c3c24eaa3304fd8b09d1906b08c22c, type: 3}
+  m_Name: homa_data
+  m_EditorClassIdentifier: 
+  configData:
+  - pathHash: -1609317064
+    value: FR5VkBDH
+  - pathHash: -876955219
+    value: 4914b514b84e8e9
+  - pathHash: 1735753716
+    value: True
+  - pathHash: -255302860
+    value: False
+  - pathHash: -1958298337
+    value: False
+  - pathHash: 891139941
+    value: False
+  - pathHash: 2070089620
+    value: False
+  - pathHash: -1581320791
+    value: False
+  - pathHash: 2130722965
+    value: False
+  - pathHash: 296716727
+    value: False
+  - pathHash: 647524154
+    value: 31
+  - pathHash: 2099441271
+    value: False
+  - pathHash: -10439546
+    value: adjust_temp_app_id
+  - pathHash: 1158911540
+    value: 2u317rj2fugw
+  - pathHash: -1790251483
+    value: True
+  - pathHash: 1396189054
+    value: 2b3d989776ba39b454ddb277e0b48b84
+  - pathHash: -1555731084
+    value: d236a00275a201622a8d0a405b1e50279b0f3942
+  - pathHash: 1198286589
+    value: 706518094529484
+  - pathHash: 1722449587
+    value: ec1a821cb5f8166b45658483081b9055
+  PluginManifestHash: -1104281001

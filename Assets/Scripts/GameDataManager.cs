@@ -43,13 +43,15 @@ public class GameDataManager : MonoBehaviour
     public void LoadData()
     {
         data = JsonUtility.FromJson<DataList>(JSONText.text);
-        totalMoney=data.levelsArray[currentLevel-1].startMoney; 
+        
         //totalMoney = PlayerPrefs.GetInt("totalMoney",0 );
         currentLevel = PlayerPrefs.GetInt("CurrentLevel", 1);
+        totalMoney=data.levelsArray[currentLevel-1].startMoney; 
     }
     public void SaveData()
     {
         PlayerPrefs.SetInt("CurrentLevel",currentLevel);
+        LoadData();
     }
     public void ControlMoneyButtons()
     {
