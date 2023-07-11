@@ -4,13 +4,13 @@
    {
         "howManyPeopleToGenerate":60,
         "waveNumber":3,
-         "startMoney":600
+         "startMoney":160
     },
     
    {
-        "howManyPeopleToGenerate":55,
+        "howManyPeopleToGenerate":220,
         "waveNumber":10,
-        "startMoney":300
+        "startMoney":600
     }
   ]
 }
